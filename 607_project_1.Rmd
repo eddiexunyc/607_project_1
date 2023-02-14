@@ -1,0 +1,41 @@
+---
+title: "DATA 607 Project 1"
+output: html_document
+date: "2023-02-12"
+---
+
+## Load neccessary packages
+```{r}
+library(tidyverse)
+library(stringr)
+```
+
+## Data Analysis on Chess Players
+For this project, a text file of chess tournament was given. An analysis will be conducted to provide the player's statistic and output it into a csv file.
+
+## Read Text File
+```{r}
+chess_URL <-"https://learn-us-east-1-prod-fleet02-xythos.content.blackboardcdn.com/61aab133e7df2/7645617?X-Blackboard-S3-Bucket=learn-us-east-1-prod-fleet01-xythos&X-Blackboard-Expiration=1676343600000&X-Blackboard-Signature=xH8wGwzjejiXa3ny2J9dwkSRa0Urbh2zIM9Xhrjg%2BUA%3D&X-Blackboard-Client-Id=100211&X-Blackboard-S3-Region=us-east-1&response-cache-control=private%2C%20max-age%3D21600&response-content-disposition=inline%3B%20filename%2A%3DUTF-8%27%27tournamentinfo.txt&response-content-type=text%2Fplain&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEG8aCXVzLWVhc3QtMSJHMEUCIQDj4ANR57p8wFQS5UATqNa3C%2FVHVxCxtFmDcxyE4UI%2FVgIgCNmgD98xTaT%2FsQ1QM7%2Bps0xoMHJW%2BjkI9Uceb5U8GLMq1QQI%2BP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARACGgw2MzU1Njc5MjQxODMiDLUH7%2FM%2BVfKIv9Vn1yqpBKo39OxH%2FvjfC0gen5pXSnMuMCTnH65EExNyAJ7vYEFmhqij4GfONcDMsr9uaRgssvSvG3%2FImtAWaGZ3uxNyCeUzm%2FHD%2Ft%2Bp%2Bh3kmgv4cFFAO7Li85A%2BjKPA1QaVnCOJ2a4Z5yJ%2BcAXgFEaMJFKhgevkw48ObknLNnnI2KDrjGUuTvZlGp00mXCqBTbbwaC436z3YM1gjNS9fe8jSLY9tSi5v6v%2BeNwUeKcAtzyqc2V209PoBIUHTWLeebxUuVFlu0Ey4iLf6%2Fn6Mg0H%2BZDxO2OvCQgd42%2FrjGneSXuJBAbntjA1IfZcHh%2B0lCBoOVseJpnWUw2XtX%2F2F2HFiRtX%2Fz7X9b4otz2rJasZ13nvayfzwsLPXkHXqondkVFINvEUov%2FxZ1P7eNUefKepUBCalRAVV8xIUJ41D1v79226uQ69Pyv4U02NR1twbVRKgZJ4JADxNdg26h4%2FKF%2FCJCY5WnxaliqYZTsnY5PJ%2Fm54WIZQ4f31CMxgnYJOQwN2DLCTfSPIO3bRLxNY9KCKFRa2uAYtg6%2BU7fyzBhRNGwy9qhdrI%2FkKD5BEGLSx4ajIGabHFYSYLkRZitx3%2BRmCz2aNMtYpNmHr5Yl4Ght%2BX4wF7SlkB8UDNcFaZu4tfMvx27jJ0Hw0TN3Xai%2Fauw4116VbesrY0dM%2FjNO4n9pjLtyyHJ3uDy4AJtK4IfSJSeWOy6tD88GoFT7vW%2B48Ex%2BuahBsQqWXlreTNkKGXNkw%2FoGrnwY6qQE3dWeADELDdRkRgiIB%2FRolMPtaPNksxZtf%2Bt2fnXgd%2FTvn3zM6e1iXKWypcOLEaDoJ0BPHzokNwyt1IZZBf8D%2BHV90cCvJJZ4M%2FMsvZbZfCmvBoEnCkR1HFxPbuPalBb8Sgjlg06Uu9DebKlxNz2YKRRHzUKn1J6HJk4ekpnMmGlHANgi0n%2FoIf%2B1KXRcwKCo%2FWMcAuYjU%2FNHSQYdrcJUEmA7f2xQk6e8A&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20230213T210000Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Credential=ASIAZH6WM4PLZB77ENXJ%2F20230213%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=ebe83b02ab61f068d5e53d2fca1bce613e699160859f838fb39747ca1ae03fcc"
+
+chess_data <-read.delim(chess_URL, skip =1, header = TRUE, sep = "|")
+
+
+head(chess_data, 10)
+
+```
+
+## Data Cleaning in headers and unneccessary strings
+
+```{r}
+chess_data <-chess_data[!grepl("-----------------------------------------------------------------------------------------", chess_data$Pair),]
+names(chess_data) <-paste(names(chess_data), chess_data[1, ], sep = "_")
+chess_data <-chess_data[-1,]
+
+colnames(chess_data) <- c("Pair Num", "Player"
+)
+print(chess_data)
+
+```
+```{r}
+
+```
