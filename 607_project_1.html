@@ -355,6 +355,8 @@ display: none;
 </div>
 
 
+<div id="load-neccessary-packages" class="section level2">
+<h2>Load neccessary packages</h2>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
 ## v ggplot2 3.4.0      v purrr   1.0.1 
@@ -367,217 +369,4690 @@ display: none;
 <pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(stringr)</code></pre>
+</div>
 <div id="data-analysis-on-chess-players" class="section level2">
 <h2>Data Analysis on Chess Players</h2>
-<p>For this project, a text file of chess tournment was given. An
-analysis will be conducted to provide the player’s statistic and output
-it into a csv file.</p>
+<p>For this project, a text file of chess tournament was given (<a href="https://raw.githubusercontent.com/eddiexunyc/607_project_1/main/chess_tournment_data.txt">link</a>).
+An analysis will be conducted to provide the player’s statistic and
+output it into a csv file.</p>
 </div>
 <div id="read-text-file" class="section level2">
 <h2>Read Text File</h2>
-<pre class="r"><code>chess_data &lt;-read.table(&quot;https://learn-us-east-1-prod-fleet02-xythos.content.blackboardcdn.com/61aab133e7df2/7645617?X-Blackboard-S3-Bucket=learn-us-east-1-prod-fleet01-xythos&amp;X-Blackboard-Expiration=1676257200000&amp;X-Blackboard-Signature=BxpdHJQ1SvIFN2Gk2Drdz4MxkZ0jrV84zsylXfXMo9g%3D&amp;X-Blackboard-Client-Id=100211&amp;X-Blackboard-S3-Region=us-east-1&amp;response-cache-control=private%2C%20max-age%3D21600&amp;response-content-disposition=inline%3B%20filename%2A%3DUTF-8%27%27tournamentinfo.txt&amp;response-content-type=text%2Fplain&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLWVhc3QtMSJHMEUCIF06OKnSI%2FyHG82GsYL%2BJIqFLKWItfDmB7RanWhS19cqAiEA7rxmpJ5%2ByAFn8rRvoDrTVQO4AXd6RmMpRy%2BFspqHAUgq1QQI3v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARACGgw2MzU1Njc5MjQxODMiDLJ9%2Fv0Vo7vymyqBXiqpBB2l6Bl8esVp2ii89VSDu3l%2FpJ0PSxZ0Y899qGCk6vuIfg%2BXXbK8lLiF5Y6Xg1i%2BGu6ziTWKop6xmH17qiSqNo4ExIS7WiBPwx3XU3P2CQKTSXsFgxGnC8XZu6ELnesuU%2FEPN3%2FjlfR%2FhOJ%2B%2FYp0T2N2C4MwDCTvK7dy0BjyKhAvGkaZwTh7NVHRIpFo9az01r0BMuO1U0rlzOKfBj%2BFIwjQ11VolzJRDgEoMlgNUwtrIBq9yk3WWcy0Wub7qZrhA0JbslzhRSIDVjHVIzAhuVhMXs4KLcXtpc7NxscliHogQx%2Fex45f2YfSoPCjq9EWlqdDt9a%2FfJ1tRgu82Xk0eXmWCEs87oWHIWKBFWYoTVpq%2FV98HC8F3MfhoB848FYVI2nThiQHvDAzg%2FxhEG72XsigKFZ2DpQK6H%2BSFB6PB67tcyb%2BBu3b2G8l631YClAwNZjuOfK3Oq5LPrmRA5cT9nvY9PiHJ%2BZs9iZ9qoyJE0di2Z7DskPFxQc%2F19dVelY%2F%2BNaXtl%2FxBqe%2FnElJasFR3efWKJA866AvjOIjQwpU9sLaYHZfAVCdzdjFBrwA3esmDm8S3c9L6gEXoagQPOUK1cjQLkFg11inPL1t%2BjiIkkHojy9i26UgB6XlQZBTcwFq01WzVvpadhgr8VYgT73i30jcGJHjef34KbVZdZXfePdifyimJUPxZ5S%2BAQa20kqvgxtFy2UQl8%2BItsABWEJ1uBNAZdoBsyaNofQwnpulnwY6qQEdyVDMSFHwTpafhKY91ZvKJAobVufhkonJNIv9uCgcdrpg6T71deKf%2FNVbGbKgjx6DRh3AxdjhSn6aIHMA87wldwiCfqbbBNJZvMtJZ5TWNS01iuP4WHsXg8NQq1jUdGWvrmjxn337OCbJVeRNfCH5jkLKtZW7AoesnQj3CLmH4KomRzpa%2B4oLtwzOY4YztvMo1CyryK55n5hRSqEyFlMGJKQIGG4lL8B9&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230212T210000Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=21600&amp;X-Amz-Credential=ASIAZH6WM4PL2CX25CGQ%2F20230212%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=6de468a3a2a10a1c4f8859fa646ca81a0c0c1f6a082fbc9364ca6259ad434df0&quot;, header = TRUE, sep = &quot;\t&quot;)
+<pre class="r"><code>chess_URL &lt;-&quot;https://raw.githubusercontent.com/eddiexunyc/607_project_1/main/chess_tournment_data.txt&quot;
 
-chess_data</code></pre>
-<pre><code>##     X.........................................................................................
-## 1    Pair | Player Name                     |Total|Round|Round|Round|Round|Round|Round|Round| 
-## 2    Num  | USCF ID / Rtg (Pre-&gt;Post)       | Pts |  1  |  2  |  3  |  4  |  5  |  6  |  7  | 
-## 3    -----------------------------------------------------------------------------------------
-## 4        1 | GARY HUA                        |6.0  |W  39|W  21|W  18|W  14|W   7|D  12|D   4|
-## 5       ON | 15445895 / R: 1794   -&gt;1817     |N:2  |W    |B    |W    |B    |W    |B    |W    |
-## 6    -----------------------------------------------------------------------------------------
-## 7        2 | DAKSHESH DARURI                 |6.0  |W  63|W  58|L   4|W  17|W  16|W  20|W   7|
-## 8       MI | 14598900 / R: 1553   -&gt;1663     |N:2  |B    |W    |B    |W    |B    |W    |B    |
-## 9    -----------------------------------------------------------------------------------------
-## 10       3 | ADITYA BAJAJ                    |6.0  |L   8|W  61|W  25|W  21|W  11|W  13|W  12|
-## 11      MI | 14959604 / R: 1384   -&gt;1640     |N:2  |W    |B    |W    |B    |W    |B    |W    |
-## 12   -----------------------------------------------------------------------------------------
-## 13       4 | PATRICK H SCHILLING             |5.5  |W  23|D  28|W   2|W  26|D   5|W  19|D   1|
-## 14      MI | 12616049 / R: 1716   -&gt;1744     |N:2  |W    |B    |W    |B    |W    |B    |B    |
-## 15   -----------------------------------------------------------------------------------------
-## 16       5 | HANSHI ZUO                      |5.5  |W  45|W  37|D  12|D  13|D   4|W  14|W  17|
-## 17      MI | 14601533 / R: 1655   -&gt;1690     |N:2  |B    |W    |B    |W    |B    |W    |B    |
-## 18   -----------------------------------------------------------------------------------------
-## 19       6 | HANSEN SONG                     |5.0  |W  34|D  29|L  11|W  35|D  10|W  27|W  21|
-## 20      OH | 15055204 / R: 1686   -&gt;1687     |N:3  |W    |B    |W    |B    |B    |W    |B    |
-## 21   -----------------------------------------------------------------------------------------
-## 22       7 | GARY DEE SWATHELL               |5.0  |W  57|W  46|W  13|W  11|L   1|W   9|L   2|
-## 23      MI | 11146376 / R: 1649   -&gt;1673     |N:3  |W    |B    |W    |B    |B    |W    |W    |
-## 24   -----------------------------------------------------------------------------------------
-## 25       8 | EZEKIEL HOUGHTON                |5.0  |W   3|W  32|L  14|L   9|W  47|W  28|W  19|
-## 26      MI | 15142253 / R: 1641P17-&gt;1657P24  |N:3  |B    |W    |B    |W    |B    |W    |W    |
-## 27   -----------------------------------------------------------------------------------------
-## 28       9 | STEFANO LEE                     |5.0  |W  25|L  18|W  59|W   8|W  26|L   7|W  20|
-## 29      ON | 14954524 / R: 1411   -&gt;1564     |N:2  |W    |B    |W    |B    |W    |B    |B    |
-## 30   -----------------------------------------------------------------------------------------
-## 31      10 | ANVIT RAO                       |5.0  |D  16|L  19|W  55|W  31|D   6|W  25|W  18|
-## 32      MI | 14150362 / R: 1365   -&gt;1544     |N:3  |W    |W    |B    |B    |W    |B    |W    |
-## 33   -----------------------------------------------------------------------------------------
-## 34      11 | CAMERON WILLIAM MC LEMAN        |4.5  |D  38|W  56|W   6|L   7|L   3|W  34|W  26|
-## 35      MI | 12581589 / R: 1712   -&gt;1696     |N:3  |B    |W    |B    |W    |B    |W    |B    |
-## 36   -----------------------------------------------------------------------------------------
-## 37      12 | KENNETH J TACK                  |4.5  |W  42|W  33|D   5|W  38|H    |D   1|L   3|
-## 38      MI | 12681257 / R: 1663   -&gt;1670     |N:3  |W    |B    |W    |B    |     |W    |B    |
-## 39   -----------------------------------------------------------------------------------------
-## 40      13 | TORRANCE HENRY JR               |4.5  |W  36|W  27|L   7|D   5|W  33|L   3|W  32|
-## 41      MI | 15082995 / R: 1666   -&gt;1662     |N:3  |B    |W    |B    |B    |W    |W    |B    |
-## 42   -----------------------------------------------------------------------------------------
-## 43      14 | BRADLEY SHAW                    |4.5  |W  54|W  44|W   8|L   1|D  27|L   5|W  31|
-## 44      MI | 10131499 / R: 1610   -&gt;1618     |N:3  |W    |B    |W    |W    |B    |B    |W    |
-## 45   -----------------------------------------------------------------------------------------
-## 46      15 | ZACHARY JAMES HOUGHTON          |4.5  |D  19|L  16|W  30|L  22|W  54|W  33|W  38|
-## 47      MI | 15619130 / R: 1220P13-&gt;1416P20  |N:3  |B    |B    |W    |W    |B    |B    |W    |
-## 48   -----------------------------------------------------------------------------------------
-## 49      16 | MIKE NIKITIN                    |4.0  |D  10|W  15|H    |W  39|L   2|W  36|U    |
-## 50      MI | 10295068 / R: 1604   -&gt;1613     |N:3  |B    |W    |     |B    |W    |B    |     |
-## 51   -----------------------------------------------------------------------------------------
-## 52      17 | RONALD GRZEGORCZYK              |4.0  |W  48|W  41|L  26|L   2|W  23|W  22|L   5|
-## 53      MI | 10297702 / R: 1629   -&gt;1610     |N:3  |W    |B    |W    |B    |W    |B    |W    |
-## 54   -----------------------------------------------------------------------------------------
-## 55      18 | DAVID SUNDEEN                   |4.0  |W  47|W   9|L   1|W  32|L  19|W  38|L  10|
-## 56      MI | 11342094 / R: 1600   -&gt;1600     |N:3  |B    |W    |B    |W    |B    |W    |B    |
-## 57   -----------------------------------------------------------------------------------------
-## 58      19 | DIPANKAR ROY                    |4.0  |D  15|W  10|W  52|D  28|W  18|L   4|L   8|
-## 59      MI | 14862333 / R: 1564   -&gt;1570     |N:3  |W    |B    |W    |B    |W    |W    |B    |
-## 60   -----------------------------------------------------------------------------------------
-## 61      20 | JASON ZHENG                     |4.0  |L  40|W  49|W  23|W  41|W  28|L   2|L   9|
-## 62      MI | 14529060 / R: 1595   -&gt;1569     |N:4  |W    |B    |W    |B    |W    |B    |W    |
-## 63   -----------------------------------------------------------------------------------------
-## 64      21 | DINH DANG BUI                   |4.0  |W  43|L   1|W  47|L   3|W  40|W  39|L   6|
-## 65      ON | 15495066 / R: 1563P22-&gt;1562     |N:3  |B    |W    |B    |W    |W    |B    |W    |
-## 66   -----------------------------------------------------------------------------------------
-## 67      22 | EUGENE L MCCLURE                |4.0  |W  64|D  52|L  28|W  15|H    |L  17|W  40|
-## 68      MI | 12405534 / R: 1555   -&gt;1529     |N:4  |W    |B    |W    |B    |     |W    |B    |
-## 69   -----------------------------------------------------------------------------------------
-## 70      23 | ALAN BUI                        |4.0  |L   4|W  43|L  20|W  58|L  17|W  37|W  46|
-## 71      ON | 15030142 / R: 1363   -&gt;1371     |     |B    |W    |B    |W    |B    |W    |B    |
-## 72   -----------------------------------------------------------------------------------------
-## 73      24 | MICHAEL R ALDRICH               |4.0  |L  28|L  47|W  43|L  25|W  60|W  44|W  39|
-## 74      MI | 13469010 / R: 1229   -&gt;1300     |N:4  |B    |W    |B    |B    |W    |W    |B    |
-## 75   -----------------------------------------------------------------------------------------
-## 76      25 | LOREN SCHWIEBERT                |3.5  |L   9|W  53|L   3|W  24|D  34|L  10|W  47|
-## 77      MI | 12486656 / R: 1745   -&gt;1681     |N:4  |B    |W    |B    |W    |B    |W    |B    |
-## 78   -----------------------------------------------------------------------------------------
-## 79      26 | MAX ZHU                         |3.5  |W  49|W  40|W  17|L   4|L   9|D  32|L  11|
-## 80      ON | 15131520 / R: 1579   -&gt;1564     |N:4  |B    |W    |B    |W    |B    |W    |W    |
-## 81   -----------------------------------------------------------------------------------------
-## 82      27 | GAURAV GIDWANI                  |3.5  |W  51|L  13|W  46|W  37|D  14|L   6|U    |
-## 83      MI | 14476567 / R: 1552   -&gt;1539     |N:4  |W    |B    |W    |B    |W    |B    |     |
-## 84   -----------------------------------------------------------------------------------------
-## 85      28 | SOFIA ADINA STANESCU-BELLU      |3.5  |W  24|D   4|W  22|D  19|L  20|L   8|D  36|
-## 86      MI | 14882954 / R: 1507   -&gt;1513     |N:3  |W    |W    |B    |W    |B    |B    |W    |
-## 87   -----------------------------------------------------------------------------------------
-## 88      29 | CHIEDOZIE OKORIE                |3.5  |W  50|D   6|L  38|L  34|W  52|W  48|U    |
-## 89      MI | 15323285 / R: 1602P6 -&gt;1508P12  |N:4  |B    |W    |B    |W    |W    |B    |     |
-## 90   -----------------------------------------------------------------------------------------
-## 91      30 | GEORGE AVERY JONES              |3.5  |L  52|D  64|L  15|W  55|L  31|W  61|W  50|
-## 92      ON | 12577178 / R: 1522   -&gt;1444     |     |W    |B    |B    |W    |W    |B    |B    |
-## 93   -----------------------------------------------------------------------------------------
-## 94      31 | RISHI SHETTY                    |3.5  |L  58|D  55|W  64|L  10|W  30|W  50|L  14|
-## 95      MI | 15131618 / R: 1494   -&gt;1444     |     |B    |W    |B    |W    |B    |W    |B    |
-## 96   -----------------------------------------------------------------------------------------
-## 97      32 | JOSHUA PHILIP MATHEWS           |3.5  |W  61|L   8|W  44|L  18|W  51|D  26|L  13|
-## 98      ON | 14073750 / R: 1441   -&gt;1433     |N:4  |W    |B    |W    |B    |W    |B    |W    |
-## 99   -----------------------------------------------------------------------------------------
-## 100     33 | JADE GE                         |3.5  |W  60|L  12|W  50|D  36|L  13|L  15|W  51|
-## 101     MI | 14691842 / R: 1449   -&gt;1421     |     |B    |W    |B    |W    |B    |W    |B    |
-## 102  -----------------------------------------------------------------------------------------
-## 103     34 | MICHAEL JEFFERY THOMAS          |3.5  |L   6|W  60|L  37|W  29|D  25|L  11|W  52|
-## 104     MI | 15051807 / R: 1399   -&gt;1400     |     |B    |W    |B    |B    |W    |B    |W    |
-## 105  -----------------------------------------------------------------------------------------
-## 106     35 | JOSHUA DAVID LEE                |3.5  |L  46|L  38|W  56|L   6|W  57|D  52|W  48|
-## 107     MI | 14601397 / R: 1438   -&gt;1392     |     |W    |W    |B    |W    |B    |B    |W    |
-## 108  -----------------------------------------------------------------------------------------
-## 109     36 | SIDDHARTH JHA                   |3.5  |L  13|W  57|W  51|D  33|H    |L  16|D  28|
-## 110     MI | 14773163 / R: 1355   -&gt;1367     |N:4  |W    |B    |W    |B    |     |W    |B    |
-## 111  -----------------------------------------------------------------------------------------
-## 112     37 | AMIYATOSH PWNANANDAM            |3.5  |B    |L   5|W  34|L  27|H    |L  23|W  61|
-## 113     MI | 15489571 / R:  980P12-&gt;1077P17  |     |     |B    |W    |W    |     |B    |W    |
-## 114  -----------------------------------------------------------------------------------------
-## 115     38 | BRIAN LIU                       |3.0  |D  11|W  35|W  29|L  12|H    |L  18|L  15|
-## 116     MI | 15108523 / R: 1423   -&gt;1439     |N:4  |W    |B    |W    |W    |     |B    |B    |
-## 117  -----------------------------------------------------------------------------------------
-## 118     39 | JOEL R HENDON                   |3.0  |L   1|W  54|W  40|L  16|W  44|L  21|L  24|
-## 119     MI | 12923035 / R: 1436P23-&gt;1413     |N:4  |B    |W    |B    |W    |B    |W    |W    |
-## 120  -----------------------------------------------------------------------------------------
-## 121     40 | FOREST ZHANG                    |3.0  |W  20|L  26|L  39|W  59|L  21|W  56|L  22|
-## 122     MI | 14892710 / R: 1348   -&gt;1346     |     |B    |B    |W    |W    |B    |W    |W    |
-## 123  -----------------------------------------------------------------------------------------
-## 124     41 | KYLE WILLIAM MURPHY             |3.0  |W  59|L  17|W  58|L  20|X    |U    |U    |
-## 125     MI | 15761443 / R: 1403P5 -&gt;1341P9   |     |B    |W    |B    |W    |     |     |     |
-## 126  -----------------------------------------------------------------------------------------
-## 127     42 | JARED GE                        |3.0  |L  12|L  50|L  57|D  60|D  61|W  64|W  56|
-## 128     MI | 14462326 / R: 1332   -&gt;1256     |     |B    |W    |B    |B    |W    |W    |B    |
-## 129  -----------------------------------------------------------------------------------------
-## 130     43 | ROBERT GLEN VASEY               |3.0  |L  21|L  23|L  24|W  63|W  59|L  46|W  55|
-## 131     MI | 14101068 / R: 1283   -&gt;1244     |     |W    |B    |W    |W    |B    |B    |W    |
-## 132  -----------------------------------------------------------------------------------------
-## 133     44 | JUSTIN D SCHILLING              |3.0  |B    |L  14|L  32|W  53|L  39|L  24|W  59|
-## 134     MI | 15323504 / R: 1199   -&gt;1199     |     |     |W    |B    |B    |W    |B    |W    |
-## 135  -----------------------------------------------------------------------------------------
-## 136     45 | DEREK YAN                       |3.0  |L   5|L  51|D  60|L  56|W  63|D  55|W  58|
-## 137     MI | 15372807 / R: 1242   -&gt;1191     |     |W    |B    |W    |B    |W    |B    |W    |
-## 138  -----------------------------------------------------------------------------------------
-## 139     46 | JACOB ALEXANDER LAVALLEY        |3.0  |W  35|L   7|L  27|L  50|W  64|W  43|L  23|
-## 140     MI | 15490981 / R:  377P3 -&gt;1076P10  |     |B    |W    |B    |W    |B    |W    |W    |
-## 141  -----------------------------------------------------------------------------------------
-## 142     47 | ERIC WRIGHT                     |2.5  |L  18|W  24|L  21|W  61|L   8|D  51|L  25|
-## 143     MI | 12533115 / R: 1362   -&gt;1341     |     |W    |B    |W    |B    |W    |B    |W    |
-## 144  -----------------------------------------------------------------------------------------
-## 145     48 | DANIEL KHAIN                    |2.5  |L  17|W  63|H    |D  52|H    |L  29|L  35|
-## 146     MI | 14369165 / R: 1382   -&gt;1335     |     |B    |W    |     |B    |     |W    |B    |
-## 147  -----------------------------------------------------------------------------------------
-## 148     49 | MICHAEL J MARTIN                |2.5  |L  26|L  20|D  63|D  64|W  58|H    |U    |
-## 149     MI | 12531685 / R: 1291P12-&gt;1259P17  |     |W    |W    |B    |W    |B    |     |     |
-## 150  -----------------------------------------------------------------------------------------
-## 151     50 | SHIVAM JHA                      |2.5  |L  29|W  42|L  33|W  46|H    |L  31|L  30|
-## 152     MI | 14773178 / R: 1056   -&gt;1111     |     |W    |B    |W    |B    |     |B    |W    |
-## 153  -----------------------------------------------------------------------------------------
-## 154     51 | TEJAS AYYAGARI                  |2.5  |L  27|W  45|L  36|W  57|L  32|D  47|L  33|
-## 155     MI | 15205474 / R: 1011   -&gt;1097     |     |B    |W    |B    |W    |B    |W    |W    |
-## 156  -----------------------------------------------------------------------------------------
-## 157     52 | ETHAN GUO                       |2.5  |W  30|D  22|L  19|D  48|L  29|D  35|L  34|
-## 158     MI | 14918803 / R:  935   -&gt;1092     |N:4  |B    |W    |B    |W    |B    |W    |B    |
-## 159  -----------------------------------------------------------------------------------------
-## 160     53 | JOSE C YBARRA                   |2.0  |H    |L  25|H    |L  44|U    |W  57|U    |
-## 161     MI | 12578849 / R: 1393   -&gt;1359     |     |     |B    |     |W    |     |W    |     |
-## 162  -----------------------------------------------------------------------------------------
-## 163     54 | LARRY HODGE                     |2.0  |L  14|L  39|L  61|B    |L  15|L  59|W  64|
-## 164     MI | 12836773 / R: 1270   -&gt;1200     |     |B    |B    |W    |     |W    |B    |W    |
-## 165  -----------------------------------------------------------------------------------------
-## 166     55 | ALEX KONG                       |2.0  |L  62|D  31|L  10|L  30|B    |D  45|L  43|
-## 167     MI | 15412571 / R: 1186   -&gt;1163     |     |W    |B    |W    |B    |     |W    |B    |
-## 168  -----------------------------------------------------------------------------------------
-## 169     56 | MARISA RICCI                    |2.0  |H    |L  11|L  35|W  45|H    |L  40|L  42|
-## 170     MI | 14679887 / R: 1153   -&gt;1140     |     |     |B    |W    |W    |     |B    |W    |
-## 171  -----------------------------------------------------------------------------------------
-## 172     57 | MICHAEL LU                      |2.0  |L   7|L  36|W  42|L  51|L  35|L  53|B    |
-## 173     MI | 15113330 / R: 1092   -&gt;1079     |     |B    |W    |W    |B    |W    |B    |     |
-## 174  -----------------------------------------------------------------------------------------
-## 175     58 | VIRAJ MOHILE                    |2.0  |W  31|L   2|L  41|L  23|L  49|B    |L  45|
-## 176     MI | 14700365 / R:  917   -&gt; 941     |     |W    |B    |W    |B    |W    |     |B    |
-## 177  -----------------------------------------------------------------------------------------
-## 178     59 | SEAN M MC CORMICK               |2.0  |L  41|B    |L   9|L  40|L  43|W  54|L  44|
-## 179     MI | 12841036 / R:  853   -&gt; 878     |     |W    |     |B    |B    |W    |W    |B    |
-## 180  -----------------------------------------------------------------------------------------
-## 181     60 | JULIA SHEN                      |1.5  |L  33|L  34|D  45|D  42|L  24|H    |U    |
-## 182     MI | 14579262 / R:  967   -&gt; 984     |     |W    |B    |B    |W    |B    |     |     |
-## 183  -----------------------------------------------------------------------------------------
-## 184     61 | JEZZEL FARKAS                   |1.5  |L  32|L   3|W  54|L  47|D  42|L  30|L  37|
-## 185     ON | 15771592 / R:  955P11-&gt; 979P18  |     |B    |W    |B    |W    |B    |W    |B    |
-## 186  -----------------------------------------------------------------------------------------
-## 187     62 | ASHWIN BALAJI                   |1.0  |W  55|U    |U    |U    |U    |U    |U    |
-## 188     MI | 15219542 / R: 1530   -&gt;1535     |     |B    |     |     |     |     |     |     |
-## 189  -----------------------------------------------------------------------------------------
-## 190     63 | THOMAS JOSEPH HOSMER            |1.0  |L   2|L  48|D  49|L  43|L  45|H    |U    |
-## 191     MI | 15057092 / R: 1175   -&gt;1125     |     |W    |B    |W    |B    |B    |     |     |
-## 192  -----------------------------------------------------------------------------------------
-## 193     64 | BEN LI                          |1.0  |L  22|D  30|L  31|D  49|L  46|L  42|L  54|
-## 194     MI | 15006561 / R: 1163   -&gt;1112     |     |B    |W    |W    |B    |W    |B    |B    |
-## 195  -----------------------------------------------------------------------------------------</code></pre>
+chess_data &lt;-read.delim(chess_URL, skip =1, header = TRUE, sep = &quot;|&quot;)
+
+
+head(chess_data, 10)</code></pre>
+<pre><code>##                                                                                         Pair
+## 1                                                                                      Num  
+## 2  -----------------------------------------------------------------------------------------
+## 3                                                                                         1 
+## 4                                                                                        ON 
+## 5  -----------------------------------------------------------------------------------------
+## 6                                                                                         2 
+## 7                                                                                        MI 
+## 8  -----------------------------------------------------------------------------------------
+## 9                                                                                         3 
+## 10                                                                                       MI 
+##                          Player.Name Total Round Round.1 Round.2 Round.3
+## 1   USCF ID / Rtg (Pre-&gt;Post)         Pts    1       2       3       4  
+## 2                                                                       
+## 3   GARY HUA                         6.0   W  39   W  21   W  18   W  14
+## 4   15445895 / R: 1794   -&gt;1817      N:2   W       B       W       B    
+## 5                                                                       
+## 6   DAKSHESH DARURI                  6.0   W  63   W  58   L   4   W  17
+## 7   14598900 / R: 1553   -&gt;1663      N:2   B       W       B       W    
+## 8                                                                       
+## 9   ADITYA BAJAJ                     6.0   L   8   W  61   W  25   W  21
+## 10  14959604 / R: 1384   -&gt;1640      N:2   W       B       W       B    
+##    Round.4 Round.5 Round.6  X
+## 1      5       6       7   NA
+## 2                          NA
+## 3    W   7   D  12   D   4 NA
+## 4    W       B       W     NA
+## 5                          NA
+## 6    W  16   W  20   W   7 NA
+## 7    B       W       B     NA
+## 8                          NA
+## 9    W  11   W  13   W  12 NA
+## 10   W       B       W     NA</code></pre>
+<pre class="r"><code>#check the data type of the dataframe
+str(chess_data)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    194 obs. of  11 variables:
+##  $ Pair       : chr  &quot; Num  &quot; &quot;-----------------------------------------------------------------------------------------&quot; &quot;    1 &quot; &quot;   ON &quot; ...
+##  $ Player.Name: chr  &quot; USCF ID / Rtg (Pre-&gt;Post)       &quot; &quot;&quot; &quot; GARY HUA                        &quot; &quot; 15445895 / R: 1794   -&gt;1817     &quot; ...
+##  $ Total      : chr  &quot; Pts &quot; &quot;&quot; &quot;6.0  &quot; &quot;N:2  &quot; ...
+##  $ Round      : chr  &quot;  1  &quot; &quot;&quot; &quot;W  39&quot; &quot;W    &quot; ...
+##  $ Round.1    : chr  &quot;  2  &quot; &quot;&quot; &quot;W  21&quot; &quot;B    &quot; ...
+##  $ Round.2    : chr  &quot;  3  &quot; &quot;&quot; &quot;W  18&quot; &quot;W    &quot; ...
+##  $ Round.3    : chr  &quot;  4  &quot; &quot;&quot; &quot;W  14&quot; &quot;B    &quot; ...
+##  $ Round.4    : chr  &quot;  5  &quot; &quot;&quot; &quot;W   7&quot; &quot;W    &quot; ...
+##  $ Round.5    : chr  &quot;  6  &quot; &quot;&quot; &quot;D  12&quot; &quot;B    &quot; ...
+##  $ Round.6    : chr  &quot;  7  &quot; &quot;&quot; &quot;D   4&quot; &quot;W    &quot; ...
+##  $ X          : logi  NA NA NA NA NA NA ...</code></pre>
 </div>
 <div id="data-cleaning" class="section level2">
 <h2>Data Cleaning</h2>
+<pre class="r"><code>#remove the dash
+chess_data &lt;-chess_data[!grepl(&quot;-----------------------------------------------------------------------------------------&quot;, chess_data$Pair),]
+
+#combine the 2 headers and delete a row
+names(chess_data) &lt;-paste(names(chess_data), chess_data[1, ], sep = &quot;_&quot;)
+chess_data &lt;-chess_data[-1,]
+
+#rename the column header
+colnames(chess_data) &lt;- c(&quot;Pair Num&quot;, &quot;Player Name USCF ID/RTG(Pre&gt;Post)&quot;, &quot;Total Points&quot;, &quot;Round 1&quot;, &quot;Round 2&quot;, &quot;Round 3&quot;, &quot;Round 4&quot;, &quot;Round 5&quot;, &quot;Round 6&quot;, &quot;Round 7&quot;)
+
+knitr::kable(chess_data)</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="3%" />
+<col width="7%" />
+<col width="28%" />
+<col width="10%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="2%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Pair Num</th>
+<th align="left">Player Name USCF ID/RTG(Pre&gt;Post)</th>
+<th align="left">Total Points</th>
+<th align="left">Round 1</th>
+<th align="left">Round 2</th>
+<th align="left">Round 3</th>
+<th align="left">Round 4</th>
+<th align="left">Round 5</th>
+<th align="left">Round 6</th>
+<th align="left">Round 7</th>
+<th align="left">NA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">1</td>
+<td align="left">GARY HUA</td>
+<td align="left">6.0</td>
+<td align="left">W 39</td>
+<td align="left">W 21</td>
+<td align="left">W 18</td>
+<td align="left">W 14</td>
+<td align="left">W 7</td>
+<td align="left">D 12</td>
+<td align="left">D 4</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">ON</td>
+<td align="left">15445895 / R: 1794 -&gt;1817</td>
+<td align="left">N:2</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">6</td>
+<td align="left">2</td>
+<td align="left">DAKSHESH DARURI</td>
+<td align="left">6.0</td>
+<td align="left">W 63</td>
+<td align="left">W 58</td>
+<td align="left">L 4</td>
+<td align="left">W 17</td>
+<td align="left">W 16</td>
+<td align="left">W 20</td>
+<td align="left">W 7</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">7</td>
+<td align="left">MI</td>
+<td align="left">14598900 / R: 1553 -&gt;1663</td>
+<td align="left">N:2</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">3</td>
+<td align="left">ADITYA BAJAJ</td>
+<td align="left">6.0</td>
+<td align="left">L 8</td>
+<td align="left">W 61</td>
+<td align="left">W 25</td>
+<td align="left">W 21</td>
+<td align="left">W 11</td>
+<td align="left">W 13</td>
+<td align="left">W 12</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">MI</td>
+<td align="left">14959604 / R: 1384 -&gt;1640</td>
+<td align="left">N:2</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">12</td>
+<td align="left">4</td>
+<td align="left">PATRICK H SCHILLING</td>
+<td align="left">5.5</td>
+<td align="left">W 23</td>
+<td align="left">D 28</td>
+<td align="left">W 2</td>
+<td align="left">W 26</td>
+<td align="left">D 5</td>
+<td align="left">W 19</td>
+<td align="left">D 1</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">13</td>
+<td align="left">MI</td>
+<td align="left">12616049 / R: 1716 -&gt;1744</td>
+<td align="left">N:2</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="left">5</td>
+<td align="left">HANSHI ZUO</td>
+<td align="left">5.5</td>
+<td align="left">W 45</td>
+<td align="left">W 37</td>
+<td align="left">D 12</td>
+<td align="left">D 13</td>
+<td align="left">D 4</td>
+<td align="left">W 14</td>
+<td align="left">W 17</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">16</td>
+<td align="left">MI</td>
+<td align="left">14601533 / R: 1655 -&gt;1690</td>
+<td align="left">N:2</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">18</td>
+<td align="left">6</td>
+<td align="left">HANSEN SONG</td>
+<td align="left">5.0</td>
+<td align="left">W 34</td>
+<td align="left">D 29</td>
+<td align="left">L 11</td>
+<td align="left">W 35</td>
+<td align="left">D 10</td>
+<td align="left">W 27</td>
+<td align="left">W 21</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">19</td>
+<td align="left">OH</td>
+<td align="left">15055204 / R: 1686 -&gt;1687</td>
+<td align="left">N:3</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">21</td>
+<td align="left">7</td>
+<td align="left">GARY DEE SWATHELL</td>
+<td align="left">5.0</td>
+<td align="left">W 57</td>
+<td align="left">W 46</td>
+<td align="left">W 13</td>
+<td align="left">W 11</td>
+<td align="left">L 1</td>
+<td align="left">W 9</td>
+<td align="left">L 2</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">22</td>
+<td align="left">MI</td>
+<td align="left">11146376 / R: 1649 -&gt;1673</td>
+<td align="left">N:3</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">24</td>
+<td align="left">8</td>
+<td align="left">EZEKIEL HOUGHTON</td>
+<td align="left">5.0</td>
+<td align="left">W 3</td>
+<td align="left">W 32</td>
+<td align="left">L 14</td>
+<td align="left">L 9</td>
+<td align="left">W 47</td>
+<td align="left">W 28</td>
+<td align="left">W 19</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">25</td>
+<td align="left">MI</td>
+<td align="left">15142253 / R: 1641P17-&gt;1657P24</td>
+<td align="left">N:3</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">27</td>
+<td align="left">9</td>
+<td align="left">STEFANO LEE</td>
+<td align="left">5.0</td>
+<td align="left">W 25</td>
+<td align="left">L 18</td>
+<td align="left">W 59</td>
+<td align="left">W 8</td>
+<td align="left">W 26</td>
+<td align="left">L 7</td>
+<td align="left">W 20</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">28</td>
+<td align="left">ON</td>
+<td align="left">14954524 / R: 1411 -&gt;1564</td>
+<td align="left">N:2</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">30</td>
+<td align="left">10</td>
+<td align="left">ANVIT RAO</td>
+<td align="left">5.0</td>
+<td align="left">D 16</td>
+<td align="left">L 19</td>
+<td align="left">W 55</td>
+<td align="left">W 31</td>
+<td align="left">D 6</td>
+<td align="left">W 25</td>
+<td align="left">W 18</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">31</td>
+<td align="left">MI</td>
+<td align="left">14150362 / R: 1365 -&gt;1544</td>
+<td align="left">N:3</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">33</td>
+<td align="left">11</td>
+<td align="left">CAMERON WILLIAM MC LEMAN</td>
+<td align="left">4.5</td>
+<td align="left">D 38</td>
+<td align="left">W 56</td>
+<td align="left">W 6</td>
+<td align="left">L 7</td>
+<td align="left">L 3</td>
+<td align="left">W 34</td>
+<td align="left">W 26</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">34</td>
+<td align="left">MI</td>
+<td align="left">12581589 / R: 1712 -&gt;1696</td>
+<td align="left">N:3</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">36</td>
+<td align="left">12</td>
+<td align="left">KENNETH J TACK</td>
+<td align="left">4.5</td>
+<td align="left">W 42</td>
+<td align="left">W 33</td>
+<td align="left">D 5</td>
+<td align="left">W 38</td>
+<td align="left">H</td>
+<td align="left">D 1</td>
+<td align="left">L 3</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">37</td>
+<td align="left">MI</td>
+<td align="left">12681257 / R: 1663 -&gt;1670</td>
+<td align="left">N:3</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">39</td>
+<td align="left">13</td>
+<td align="left">TORRANCE HENRY JR</td>
+<td align="left">4.5</td>
+<td align="left">W 36</td>
+<td align="left">W 27</td>
+<td align="left">L 7</td>
+<td align="left">D 5</td>
+<td align="left">W 33</td>
+<td align="left">L 3</td>
+<td align="left">W 32</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">40</td>
+<td align="left">MI</td>
+<td align="left">15082995 / R: 1666 -&gt;1662</td>
+<td align="left">N:3</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">42</td>
+<td align="left">14</td>
+<td align="left">BRADLEY SHAW</td>
+<td align="left">4.5</td>
+<td align="left">W 54</td>
+<td align="left">W 44</td>
+<td align="left">W 8</td>
+<td align="left">L 1</td>
+<td align="left">D 27</td>
+<td align="left">L 5</td>
+<td align="left">W 31</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">43</td>
+<td align="left">MI</td>
+<td align="left">10131499 / R: 1610 -&gt;1618</td>
+<td align="left">N:3</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">45</td>
+<td align="left">15</td>
+<td align="left">ZACHARY JAMES HOUGHTON</td>
+<td align="left">4.5</td>
+<td align="left">D 19</td>
+<td align="left">L 16</td>
+<td align="left">W 30</td>
+<td align="left">L 22</td>
+<td align="left">W 54</td>
+<td align="left">W 33</td>
+<td align="left">W 38</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">46</td>
+<td align="left">MI</td>
+<td align="left">15619130 / R: 1220P13-&gt;1416P20</td>
+<td align="left">N:3</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">48</td>
+<td align="left">16</td>
+<td align="left">MIKE NIKITIN</td>
+<td align="left">4.0</td>
+<td align="left">D 10</td>
+<td align="left">W 15</td>
+<td align="left">H</td>
+<td align="left">W 39</td>
+<td align="left">L 2</td>
+<td align="left">W 36</td>
+<td align="left">U</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">49</td>
+<td align="left">MI</td>
+<td align="left">10295068 / R: 1604 -&gt;1613</td>
+<td align="left">N:3</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">51</td>
+<td align="left">17</td>
+<td align="left">RONALD GRZEGORCZYK</td>
+<td align="left">4.0</td>
+<td align="left">W 48</td>
+<td align="left">W 41</td>
+<td align="left">L 26</td>
+<td align="left">L 2</td>
+<td align="left">W 23</td>
+<td align="left">W 22</td>
+<td align="left">L 5</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">52</td>
+<td align="left">MI</td>
+<td align="left">10297702 / R: 1629 -&gt;1610</td>
+<td align="left">N:3</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">54</td>
+<td align="left">18</td>
+<td align="left">DAVID SUNDEEN</td>
+<td align="left">4.0</td>
+<td align="left">W 47</td>
+<td align="left">W 9</td>
+<td align="left">L 1</td>
+<td align="left">W 32</td>
+<td align="left">L 19</td>
+<td align="left">W 38</td>
+<td align="left">L 10</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">55</td>
+<td align="left">MI</td>
+<td align="left">11342094 / R: 1600 -&gt;1600</td>
+<td align="left">N:3</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">57</td>
+<td align="left">19</td>
+<td align="left">DIPANKAR ROY</td>
+<td align="left">4.0</td>
+<td align="left">D 15</td>
+<td align="left">W 10</td>
+<td align="left">W 52</td>
+<td align="left">D 28</td>
+<td align="left">W 18</td>
+<td align="left">L 4</td>
+<td align="left">L 8</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">58</td>
+<td align="left">MI</td>
+<td align="left">14862333 / R: 1564 -&gt;1570</td>
+<td align="left">N:3</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">60</td>
+<td align="left">20</td>
+<td align="left">JASON ZHENG</td>
+<td align="left">4.0</td>
+<td align="left">L 40</td>
+<td align="left">W 49</td>
+<td align="left">W 23</td>
+<td align="left">W 41</td>
+<td align="left">W 28</td>
+<td align="left">L 2</td>
+<td align="left">L 9</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">61</td>
+<td align="left">MI</td>
+<td align="left">14529060 / R: 1595 -&gt;1569</td>
+<td align="left">N:4</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">63</td>
+<td align="left">21</td>
+<td align="left">DINH DANG BUI</td>
+<td align="left">4.0</td>
+<td align="left">W 43</td>
+<td align="left">L 1</td>
+<td align="left">W 47</td>
+<td align="left">L 3</td>
+<td align="left">W 40</td>
+<td align="left">W 39</td>
+<td align="left">L 6</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">64</td>
+<td align="left">ON</td>
+<td align="left">15495066 / R: 1563P22-&gt;1562</td>
+<td align="left">N:3</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">66</td>
+<td align="left">22</td>
+<td align="left">EUGENE L MCCLURE</td>
+<td align="left">4.0</td>
+<td align="left">W 64</td>
+<td align="left">D 52</td>
+<td align="left">L 28</td>
+<td align="left">W 15</td>
+<td align="left">H</td>
+<td align="left">L 17</td>
+<td align="left">W 40</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">67</td>
+<td align="left">MI</td>
+<td align="left">12405534 / R: 1555 -&gt;1529</td>
+<td align="left">N:4</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">69</td>
+<td align="left">23</td>
+<td align="left">ALAN BUI</td>
+<td align="left">4.0</td>
+<td align="left">L 4</td>
+<td align="left">W 43</td>
+<td align="left">L 20</td>
+<td align="left">W 58</td>
+<td align="left">L 17</td>
+<td align="left">W 37</td>
+<td align="left">W 46</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">70</td>
+<td align="left">ON</td>
+<td align="left">15030142 / R: 1363 -&gt;1371</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">72</td>
+<td align="left">24</td>
+<td align="left">MICHAEL R ALDRICH</td>
+<td align="left">4.0</td>
+<td align="left">L 28</td>
+<td align="left">L 47</td>
+<td align="left">W 43</td>
+<td align="left">L 25</td>
+<td align="left">W 60</td>
+<td align="left">W 44</td>
+<td align="left">W 39</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">73</td>
+<td align="left">MI</td>
+<td align="left">13469010 / R: 1229 -&gt;1300</td>
+<td align="left">N:4</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">75</td>
+<td align="left">25</td>
+<td align="left">LOREN SCHWIEBERT</td>
+<td align="left">3.5</td>
+<td align="left">L 9</td>
+<td align="left">W 53</td>
+<td align="left">L 3</td>
+<td align="left">W 24</td>
+<td align="left">D 34</td>
+<td align="left">L 10</td>
+<td align="left">W 47</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">76</td>
+<td align="left">MI</td>
+<td align="left">12486656 / R: 1745 -&gt;1681</td>
+<td align="left">N:4</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">78</td>
+<td align="left">26</td>
+<td align="left">MAX ZHU</td>
+<td align="left">3.5</td>
+<td align="left">W 49</td>
+<td align="left">W 40</td>
+<td align="left">W 17</td>
+<td align="left">L 4</td>
+<td align="left">L 9</td>
+<td align="left">D 32</td>
+<td align="left">L 11</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">79</td>
+<td align="left">ON</td>
+<td align="left">15131520 / R: 1579 -&gt;1564</td>
+<td align="left">N:4</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">81</td>
+<td align="left">27</td>
+<td align="left">GAURAV GIDWANI</td>
+<td align="left">3.5</td>
+<td align="left">W 51</td>
+<td align="left">L 13</td>
+<td align="left">W 46</td>
+<td align="left">W 37</td>
+<td align="left">D 14</td>
+<td align="left">L 6</td>
+<td align="left">U</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">82</td>
+<td align="left">MI</td>
+<td align="left">14476567 / R: 1552 -&gt;1539</td>
+<td align="left">N:4</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">84</td>
+<td align="left">28</td>
+<td align="left">SOFIA ADINA STANESCU-BELLU</td>
+<td align="left">3.5</td>
+<td align="left">W 24</td>
+<td align="left">D 4</td>
+<td align="left">W 22</td>
+<td align="left">D 19</td>
+<td align="left">L 20</td>
+<td align="left">L 8</td>
+<td align="left">D 36</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">85</td>
+<td align="left">MI</td>
+<td align="left">14882954 / R: 1507 -&gt;1513</td>
+<td align="left">N:3</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">87</td>
+<td align="left">29</td>
+<td align="left">CHIEDOZIE OKORIE</td>
+<td align="left">3.5</td>
+<td align="left">W 50</td>
+<td align="left">D 6</td>
+<td align="left">L 38</td>
+<td align="left">L 34</td>
+<td align="left">W 52</td>
+<td align="left">W 48</td>
+<td align="left">U</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">88</td>
+<td align="left">MI</td>
+<td align="left">15323285 / R: 1602P6 -&gt;1508P12</td>
+<td align="left">N:4</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">90</td>
+<td align="left">30</td>
+<td align="left">GEORGE AVERY JONES</td>
+<td align="left">3.5</td>
+<td align="left">L 52</td>
+<td align="left">D 64</td>
+<td align="left">L 15</td>
+<td align="left">W 55</td>
+<td align="left">L 31</td>
+<td align="left">W 61</td>
+<td align="left">W 50</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">91</td>
+<td align="left">ON</td>
+<td align="left">12577178 / R: 1522 -&gt;1444</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">93</td>
+<td align="left">31</td>
+<td align="left">RISHI SHETTY</td>
+<td align="left">3.5</td>
+<td align="left">L 58</td>
+<td align="left">D 55</td>
+<td align="left">W 64</td>
+<td align="left">L 10</td>
+<td align="left">W 30</td>
+<td align="left">W 50</td>
+<td align="left">L 14</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">94</td>
+<td align="left">MI</td>
+<td align="left">15131618 / R: 1494 -&gt;1444</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">96</td>
+<td align="left">32</td>
+<td align="left">JOSHUA PHILIP MATHEWS</td>
+<td align="left">3.5</td>
+<td align="left">W 61</td>
+<td align="left">L 8</td>
+<td align="left">W 44</td>
+<td align="left">L 18</td>
+<td align="left">W 51</td>
+<td align="left">D 26</td>
+<td align="left">L 13</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">97</td>
+<td align="left">ON</td>
+<td align="left">14073750 / R: 1441 -&gt;1433</td>
+<td align="left">N:4</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">99</td>
+<td align="left">33</td>
+<td align="left">JADE GE</td>
+<td align="left">3.5</td>
+<td align="left">W 60</td>
+<td align="left">L 12</td>
+<td align="left">W 50</td>
+<td align="left">D 36</td>
+<td align="left">L 13</td>
+<td align="left">L 15</td>
+<td align="left">W 51</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">100</td>
+<td align="left">MI</td>
+<td align="left">14691842 / R: 1449 -&gt;1421</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">102</td>
+<td align="left">34</td>
+<td align="left">MICHAEL JEFFERY THOMAS</td>
+<td align="left">3.5</td>
+<td align="left">L 6</td>
+<td align="left">W 60</td>
+<td align="left">L 37</td>
+<td align="left">W 29</td>
+<td align="left">D 25</td>
+<td align="left">L 11</td>
+<td align="left">W 52</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">103</td>
+<td align="left">MI</td>
+<td align="left">15051807 / R: 1399 -&gt;1400</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">105</td>
+<td align="left">35</td>
+<td align="left">JOSHUA DAVID LEE</td>
+<td align="left">3.5</td>
+<td align="left">L 46</td>
+<td align="left">L 38</td>
+<td align="left">W 56</td>
+<td align="left">L 6</td>
+<td align="left">W 57</td>
+<td align="left">D 52</td>
+<td align="left">W 48</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">106</td>
+<td align="left">MI</td>
+<td align="left">14601397 / R: 1438 -&gt;1392</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">108</td>
+<td align="left">36</td>
+<td align="left">SIDDHARTH JHA</td>
+<td align="left">3.5</td>
+<td align="left">L 13</td>
+<td align="left">W 57</td>
+<td align="left">W 51</td>
+<td align="left">D 33</td>
+<td align="left">H</td>
+<td align="left">L 16</td>
+<td align="left">D 28</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">109</td>
+<td align="left">MI</td>
+<td align="left">14773163 / R: 1355 -&gt;1367</td>
+<td align="left">N:4</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">111</td>
+<td align="left">37</td>
+<td align="left">AMIYATOSH PWNANANDAM</td>
+<td align="left">3.5</td>
+<td align="left">B</td>
+<td align="left">L 5</td>
+<td align="left">W 34</td>
+<td align="left">L 27</td>
+<td align="left">H</td>
+<td align="left">L 23</td>
+<td align="left">W 61</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">112</td>
+<td align="left">MI</td>
+<td align="left">15489571 / R: 980P12-&gt;1077P17</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">114</td>
+<td align="left">38</td>
+<td align="left">BRIAN LIU</td>
+<td align="left">3.0</td>
+<td align="left">D 11</td>
+<td align="left">W 35</td>
+<td align="left">W 29</td>
+<td align="left">L 12</td>
+<td align="left">H</td>
+<td align="left">L 18</td>
+<td align="left">L 15</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">115</td>
+<td align="left">MI</td>
+<td align="left">15108523 / R: 1423 -&gt;1439</td>
+<td align="left">N:4</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">117</td>
+<td align="left">39</td>
+<td align="left">JOEL R HENDON</td>
+<td align="left">3.0</td>
+<td align="left">L 1</td>
+<td align="left">W 54</td>
+<td align="left">W 40</td>
+<td align="left">L 16</td>
+<td align="left">W 44</td>
+<td align="left">L 21</td>
+<td align="left">L 24</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">118</td>
+<td align="left">MI</td>
+<td align="left">12923035 / R: 1436P23-&gt;1413</td>
+<td align="left">N:4</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">120</td>
+<td align="left">40</td>
+<td align="left">FOREST ZHANG</td>
+<td align="left">3.0</td>
+<td align="left">W 20</td>
+<td align="left">L 26</td>
+<td align="left">L 39</td>
+<td align="left">W 59</td>
+<td align="left">L 21</td>
+<td align="left">W 56</td>
+<td align="left">L 22</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">121</td>
+<td align="left">MI</td>
+<td align="left">14892710 / R: 1348 -&gt;1346</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">123</td>
+<td align="left">41</td>
+<td align="left">KYLE WILLIAM MURPHY</td>
+<td align="left">3.0</td>
+<td align="left">W 59</td>
+<td align="left">L 17</td>
+<td align="left">W 58</td>
+<td align="left">L 20</td>
+<td align="left">X</td>
+<td align="left">U</td>
+<td align="left">U</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">124</td>
+<td align="left">MI</td>
+<td align="left">15761443 / R: 1403P5 -&gt;1341P9</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">126</td>
+<td align="left">42</td>
+<td align="left">JARED GE</td>
+<td align="left">3.0</td>
+<td align="left">L 12</td>
+<td align="left">L 50</td>
+<td align="left">L 57</td>
+<td align="left">D 60</td>
+<td align="left">D 61</td>
+<td align="left">W 64</td>
+<td align="left">W 56</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">127</td>
+<td align="left">MI</td>
+<td align="left">14462326 / R: 1332 -&gt;1256</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">129</td>
+<td align="left">43</td>
+<td align="left">ROBERT GLEN VASEY</td>
+<td align="left">3.0</td>
+<td align="left">L 21</td>
+<td align="left">L 23</td>
+<td align="left">L 24</td>
+<td align="left">W 63</td>
+<td align="left">W 59</td>
+<td align="left">L 46</td>
+<td align="left">W 55</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">130</td>
+<td align="left">MI</td>
+<td align="left">14101068 / R: 1283 -&gt;1244</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">132</td>
+<td align="left">44</td>
+<td align="left">JUSTIN D SCHILLING</td>
+<td align="left">3.0</td>
+<td align="left">B</td>
+<td align="left">L 14</td>
+<td align="left">L 32</td>
+<td align="left">W 53</td>
+<td align="left">L 39</td>
+<td align="left">L 24</td>
+<td align="left">W 59</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">133</td>
+<td align="left">MI</td>
+<td align="left">15323504 / R: 1199 -&gt;1199</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">135</td>
+<td align="left">45</td>
+<td align="left">DEREK YAN</td>
+<td align="left">3.0</td>
+<td align="left">L 5</td>
+<td align="left">L 51</td>
+<td align="left">D 60</td>
+<td align="left">L 56</td>
+<td align="left">W 63</td>
+<td align="left">D 55</td>
+<td align="left">W 58</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">136</td>
+<td align="left">MI</td>
+<td align="left">15372807 / R: 1242 -&gt;1191</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">138</td>
+<td align="left">46</td>
+<td align="left">JACOB ALEXANDER LAVALLEY</td>
+<td align="left">3.0</td>
+<td align="left">W 35</td>
+<td align="left">L 7</td>
+<td align="left">L 27</td>
+<td align="left">L 50</td>
+<td align="left">W 64</td>
+<td align="left">W 43</td>
+<td align="left">L 23</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">139</td>
+<td align="left">MI</td>
+<td align="left">15490981 / R: 377P3 -&gt;1076P10</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">141</td>
+<td align="left">47</td>
+<td align="left">ERIC WRIGHT</td>
+<td align="left">2.5</td>
+<td align="left">L 18</td>
+<td align="left">W 24</td>
+<td align="left">L 21</td>
+<td align="left">W 61</td>
+<td align="left">L 8</td>
+<td align="left">D 51</td>
+<td align="left">L 25</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">142</td>
+<td align="left">MI</td>
+<td align="left">12533115 / R: 1362 -&gt;1341</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">144</td>
+<td align="left">48</td>
+<td align="left">DANIEL KHAIN</td>
+<td align="left">2.5</td>
+<td align="left">L 17</td>
+<td align="left">W 63</td>
+<td align="left">H</td>
+<td align="left">D 52</td>
+<td align="left">H</td>
+<td align="left">L 29</td>
+<td align="left">L 35</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">145</td>
+<td align="left">MI</td>
+<td align="left">14369165 / R: 1382 -&gt;1335</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">147</td>
+<td align="left">49</td>
+<td align="left">MICHAEL J MARTIN</td>
+<td align="left">2.5</td>
+<td align="left">L 26</td>
+<td align="left">L 20</td>
+<td align="left">D 63</td>
+<td align="left">D 64</td>
+<td align="left">W 58</td>
+<td align="left">H</td>
+<td align="left">U</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">148</td>
+<td align="left">MI</td>
+<td align="left">12531685 / R: 1291P12-&gt;1259P17</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">150</td>
+<td align="left">50</td>
+<td align="left">SHIVAM JHA</td>
+<td align="left">2.5</td>
+<td align="left">L 29</td>
+<td align="left">W 42</td>
+<td align="left">L 33</td>
+<td align="left">W 46</td>
+<td align="left">H</td>
+<td align="left">L 31</td>
+<td align="left">L 30</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">151</td>
+<td align="left">MI</td>
+<td align="left">14773178 / R: 1056 -&gt;1111</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">153</td>
+<td align="left">51</td>
+<td align="left">TEJAS AYYAGARI</td>
+<td align="left">2.5</td>
+<td align="left">L 27</td>
+<td align="left">W 45</td>
+<td align="left">L 36</td>
+<td align="left">W 57</td>
+<td align="left">L 32</td>
+<td align="left">D 47</td>
+<td align="left">L 33</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">154</td>
+<td align="left">MI</td>
+<td align="left">15205474 / R: 1011 -&gt;1097</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">156</td>
+<td align="left">52</td>
+<td align="left">ETHAN GUO</td>
+<td align="left">2.5</td>
+<td align="left">W 30</td>
+<td align="left">D 22</td>
+<td align="left">L 19</td>
+<td align="left">D 48</td>
+<td align="left">L 29</td>
+<td align="left">D 35</td>
+<td align="left">L 34</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">157</td>
+<td align="left">MI</td>
+<td align="left">14918803 / R: 935 -&gt;1092</td>
+<td align="left">N:4</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">159</td>
+<td align="left">53</td>
+<td align="left">JOSE C YBARRA</td>
+<td align="left">2.0</td>
+<td align="left">H</td>
+<td align="left">L 25</td>
+<td align="left">H</td>
+<td align="left">L 44</td>
+<td align="left">U</td>
+<td align="left">W 57</td>
+<td align="left">U</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">160</td>
+<td align="left">MI</td>
+<td align="left">12578849 / R: 1393 -&gt;1359</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left"></td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">162</td>
+<td align="left">54</td>
+<td align="left">LARRY HODGE</td>
+<td align="left">2.0</td>
+<td align="left">L 14</td>
+<td align="left">L 39</td>
+<td align="left">L 61</td>
+<td align="left">B</td>
+<td align="left">L 15</td>
+<td align="left">L 59</td>
+<td align="left">W 64</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">163</td>
+<td align="left">MI</td>
+<td align="left">12836773 / R: 1270 -&gt;1200</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">165</td>
+<td align="left">55</td>
+<td align="left">ALEX KONG</td>
+<td align="left">2.0</td>
+<td align="left">L 62</td>
+<td align="left">D 31</td>
+<td align="left">L 10</td>
+<td align="left">L 30</td>
+<td align="left">B</td>
+<td align="left">D 45</td>
+<td align="left">L 43</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">166</td>
+<td align="left">MI</td>
+<td align="left">15412571 / R: 1186 -&gt;1163</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">168</td>
+<td align="left">56</td>
+<td align="left">MARISA RICCI</td>
+<td align="left">2.0</td>
+<td align="left">H</td>
+<td align="left">L 11</td>
+<td align="left">L 35</td>
+<td align="left">W 45</td>
+<td align="left">H</td>
+<td align="left">L 40</td>
+<td align="left">L 42</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">169</td>
+<td align="left">MI</td>
+<td align="left">14679887 / R: 1153 -&gt;1140</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">171</td>
+<td align="left">57</td>
+<td align="left">MICHAEL LU</td>
+<td align="left">2.0</td>
+<td align="left">L 7</td>
+<td align="left">L 36</td>
+<td align="left">W 42</td>
+<td align="left">L 51</td>
+<td align="left">L 35</td>
+<td align="left">L 53</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">172</td>
+<td align="left">MI</td>
+<td align="left">15113330 / R: 1092 -&gt;1079</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">174</td>
+<td align="left">58</td>
+<td align="left">VIRAJ MOHILE</td>
+<td align="left">2.0</td>
+<td align="left">W 31</td>
+<td align="left">L 2</td>
+<td align="left">L 41</td>
+<td align="left">L 23</td>
+<td align="left">L 49</td>
+<td align="left">B</td>
+<td align="left">L 45</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">175</td>
+<td align="left">MI</td>
+<td align="left">14700365 / R: 917 -&gt; 941</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">177</td>
+<td align="left">59</td>
+<td align="left">SEAN M MC CORMICK</td>
+<td align="left">2.0</td>
+<td align="left">L 41</td>
+<td align="left">B</td>
+<td align="left">L 9</td>
+<td align="left">L 40</td>
+<td align="left">L 43</td>
+<td align="left">W 54</td>
+<td align="left">L 44</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">178</td>
+<td align="left">MI</td>
+<td align="left">12841036 / R: 853 -&gt; 878</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">180</td>
+<td align="left">60</td>
+<td align="left">JULIA SHEN</td>
+<td align="left">1.5</td>
+<td align="left">L 33</td>
+<td align="left">L 34</td>
+<td align="left">D 45</td>
+<td align="left">D 42</td>
+<td align="left">L 24</td>
+<td align="left">H</td>
+<td align="left">U</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">181</td>
+<td align="left">MI</td>
+<td align="left">14579262 / R: 967 -&gt; 984</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">183</td>
+<td align="left">61</td>
+<td align="left">JEZZEL FARKAS</td>
+<td align="left">1.5</td>
+<td align="left">L 32</td>
+<td align="left">L 3</td>
+<td align="left">W 54</td>
+<td align="left">L 47</td>
+<td align="left">D 42</td>
+<td align="left">L 30</td>
+<td align="left">L 37</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">184</td>
+<td align="left">ON</td>
+<td align="left">15771592 / R: 955P11-&gt; 979P18</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">186</td>
+<td align="left">62</td>
+<td align="left">ASHWIN BALAJI</td>
+<td align="left">1.0</td>
+<td align="left">W 55</td>
+<td align="left">U</td>
+<td align="left">U</td>
+<td align="left">U</td>
+<td align="left">U</td>
+<td align="left">U</td>
+<td align="left">U</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">187</td>
+<td align="left">MI</td>
+<td align="left">15219542 / R: 1530 -&gt;1535</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">189</td>
+<td align="left">63</td>
+<td align="left">THOMAS JOSEPH HOSMER</td>
+<td align="left">1.0</td>
+<td align="left">L 2</td>
+<td align="left">L 48</td>
+<td align="left">D 49</td>
+<td align="left">L 43</td>
+<td align="left">L 45</td>
+<td align="left">H</td>
+<td align="left">U</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">190</td>
+<td align="left">MI</td>
+<td align="left">15057092 / R: 1175 -&gt;1125</td>
+<td align="left"></td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">192</td>
+<td align="left">64</td>
+<td align="left">BEN LI</td>
+<td align="left">1.0</td>
+<td align="left">L 22</td>
+<td align="left">D 30</td>
+<td align="left">L 31</td>
+<td align="left">D 49</td>
+<td align="left">L 46</td>
+<td align="left">L 42</td>
+<td align="left">L 54</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">193</td>
+<td align="left">MI</td>
+<td align="left">15006561 / R: 1163 -&gt;1112</td>
+<td align="left"></td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">W</td>
+<td align="left">B</td>
+<td align="left">B</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="data-formating" class="section level2">
+<h2>Data Formating</h2>
+<pre class="r"><code>## split the data based on sequence
+player_rating &lt;- chess_data[seq(2, nrow(chess_data), 2),]
+player_info &lt;- chess_data[seq(1, nrow(chess_data), 2),]
+
+## extract individual chess data
+player_pre_rating &lt;- str_sub_all(player_rating$`Player Name USCF ID/RTG(Pre&gt;Post)`,15, 19)
+player_uscf_id &lt;- str_sub_all(player_rating$`Player Name USCF ID/RTG(Pre&gt;Post)`,1, 8)
+player_state &lt;- str_sub_all(player_rating$`Pair Num`)
+player_round &lt;- lapply(player_info[,4:10], function(x) str_extract(x, &#39;\\d+&#39;))
+player_id &lt;- str_sub_all(player_info$`Pair Num`)
+
+## merge chess data into one dataframe
+chess_sub_data &lt;- data.frame(unlist(player_uscf_id), unlist(player_state), unlist(player_pre_rating), player_round)
+chess_new_data &lt;- cbind(player_info[,1:3], chess_sub_data)
+
+
+
+## rename the column and reorder the column by name
+colnames(chess_new_data) &lt;- c(&quot;ID&quot;, &quot;Player Name&quot;, &quot;Total Points&quot;, &quot;Player USCF ID&quot;, &quot;Player State&quot;, &quot;Player Pre-Rating&quot;, &quot;Round 1&quot;, &quot;Round 2&quot;, &quot;Round 3&quot;, &quot;Round 4&quot;, &quot;Round 5&quot;, &quot;Round 6&quot;, &quot;Round 7&quot;)
+
+knitr::kable(chess_new_data)</code></pre>
+<table>
+<colgroup>
+<col width="2%" />
+<col width="2%" />
+<col width="18%" />
+<col width="8%" />
+<col width="10%" />
+<col width="8%" />
+<col width="12%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">ID</th>
+<th align="left">Player Name</th>
+<th align="left">Total Points</th>
+<th align="left">Player USCF ID</th>
+<th align="left">Player State</th>
+<th align="left">Player Pre-Rating</th>
+<th align="left">Round 1</th>
+<th align="left">Round 2</th>
+<th align="left">Round 3</th>
+<th align="left">Round 4</th>
+<th align="left">Round 5</th>
+<th align="left">Round 6</th>
+<th align="left">Round 7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">1</td>
+<td align="left">GARY HUA</td>
+<td align="left">6.0</td>
+<td align="left">1544589</td>
+<td align="left">ON</td>
+<td align="left">1794</td>
+<td align="left">39</td>
+<td align="left">21</td>
+<td align="left">18</td>
+<td align="left">14</td>
+<td align="left">7</td>
+<td align="left">12</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">2</td>
+<td align="left">DAKSHESH DARURI</td>
+<td align="left">6.0</td>
+<td align="left">1459890</td>
+<td align="left">MI</td>
+<td align="left">1553</td>
+<td align="left">63</td>
+<td align="left">58</td>
+<td align="left">4</td>
+<td align="left">17</td>
+<td align="left">16</td>
+<td align="left">20</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">3</td>
+<td align="left">ADITYA BAJAJ</td>
+<td align="left">6.0</td>
+<td align="left">1495960</td>
+<td align="left">MI</td>
+<td align="left">1384</td>
+<td align="left">8</td>
+<td align="left">61</td>
+<td align="left">25</td>
+<td align="left">21</td>
+<td align="left">11</td>
+<td align="left">13</td>
+<td align="left">12</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">4</td>
+<td align="left">PATRICK H SCHILLING</td>
+<td align="left">5.5</td>
+<td align="left">1261604</td>
+<td align="left">MI</td>
+<td align="left">1716</td>
+<td align="left">23</td>
+<td align="left">28</td>
+<td align="left">2</td>
+<td align="left">26</td>
+<td align="left">5</td>
+<td align="left">19</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="left">5</td>
+<td align="left">HANSHI ZUO</td>
+<td align="left">5.5</td>
+<td align="left">1460153</td>
+<td align="left">MI</td>
+<td align="left">1655</td>
+<td align="left">45</td>
+<td align="left">37</td>
+<td align="left">12</td>
+<td align="left">13</td>
+<td align="left">4</td>
+<td align="left">14</td>
+<td align="left">17</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">6</td>
+<td align="left">HANSEN SONG</td>
+<td align="left">5.0</td>
+<td align="left">1505520</td>
+<td align="left">OH</td>
+<td align="left">1686</td>
+<td align="left">34</td>
+<td align="left">29</td>
+<td align="left">11</td>
+<td align="left">35</td>
+<td align="left">10</td>
+<td align="left">27</td>
+<td align="left">21</td>
+</tr>
+<tr class="odd">
+<td align="left">21</td>
+<td align="left">7</td>
+<td align="left">GARY DEE SWATHELL</td>
+<td align="left">5.0</td>
+<td align="left">1114637</td>
+<td align="left">MI</td>
+<td align="left">1649</td>
+<td align="left">57</td>
+<td align="left">46</td>
+<td align="left">13</td>
+<td align="left">11</td>
+<td align="left">1</td>
+<td align="left">9</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">24</td>
+<td align="left">8</td>
+<td align="left">EZEKIEL HOUGHTON</td>
+<td align="left">5.0</td>
+<td align="left">1514225</td>
+<td align="left">MI</td>
+<td align="left">1641</td>
+<td align="left">3</td>
+<td align="left">32</td>
+<td align="left">14</td>
+<td align="left">9</td>
+<td align="left">47</td>
+<td align="left">28</td>
+<td align="left">19</td>
+</tr>
+<tr class="odd">
+<td align="left">27</td>
+<td align="left">9</td>
+<td align="left">STEFANO LEE</td>
+<td align="left">5.0</td>
+<td align="left">1495452</td>
+<td align="left">ON</td>
+<td align="left">1411</td>
+<td align="left">25</td>
+<td align="left">18</td>
+<td align="left">59</td>
+<td align="left">8</td>
+<td align="left">26</td>
+<td align="left">7</td>
+<td align="left">20</td>
+</tr>
+<tr class="even">
+<td align="left">30</td>
+<td align="left">10</td>
+<td align="left">ANVIT RAO</td>
+<td align="left">5.0</td>
+<td align="left">1415036</td>
+<td align="left">MI</td>
+<td align="left">1365</td>
+<td align="left">16</td>
+<td align="left">19</td>
+<td align="left">55</td>
+<td align="left">31</td>
+<td align="left">6</td>
+<td align="left">25</td>
+<td align="left">18</td>
+</tr>
+<tr class="odd">
+<td align="left">33</td>
+<td align="left">11</td>
+<td align="left">CAMERON WILLIAM MC LEMAN</td>
+<td align="left">4.5</td>
+<td align="left">1258158</td>
+<td align="left">MI</td>
+<td align="left">1712</td>
+<td align="left">38</td>
+<td align="left">56</td>
+<td align="left">6</td>
+<td align="left">7</td>
+<td align="left">3</td>
+<td align="left">34</td>
+<td align="left">26</td>
+</tr>
+<tr class="even">
+<td align="left">36</td>
+<td align="left">12</td>
+<td align="left">KENNETH J TACK</td>
+<td align="left">4.5</td>
+<td align="left">1268125</td>
+<td align="left">MI</td>
+<td align="left">1663</td>
+<td align="left">42</td>
+<td align="left">33</td>
+<td align="left">5</td>
+<td align="left">38</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">39</td>
+<td align="left">13</td>
+<td align="left">TORRANCE HENRY JR</td>
+<td align="left">4.5</td>
+<td align="left">1508299</td>
+<td align="left">MI</td>
+<td align="left">1666</td>
+<td align="left">36</td>
+<td align="left">27</td>
+<td align="left">7</td>
+<td align="left">5</td>
+<td align="left">33</td>
+<td align="left">3</td>
+<td align="left">32</td>
+</tr>
+<tr class="even">
+<td align="left">42</td>
+<td align="left">14</td>
+<td align="left">BRADLEY SHAW</td>
+<td align="left">4.5</td>
+<td align="left">1013149</td>
+<td align="left">MI</td>
+<td align="left">1610</td>
+<td align="left">54</td>
+<td align="left">44</td>
+<td align="left">8</td>
+<td align="left">1</td>
+<td align="left">27</td>
+<td align="left">5</td>
+<td align="left">31</td>
+</tr>
+<tr class="odd">
+<td align="left">45</td>
+<td align="left">15</td>
+<td align="left">ZACHARY JAMES HOUGHTON</td>
+<td align="left">4.5</td>
+<td align="left">1561913</td>
+<td align="left">MI</td>
+<td align="left">1220</td>
+<td align="left">19</td>
+<td align="left">16</td>
+<td align="left">30</td>
+<td align="left">22</td>
+<td align="left">54</td>
+<td align="left">33</td>
+<td align="left">38</td>
+</tr>
+<tr class="even">
+<td align="left">48</td>
+<td align="left">16</td>
+<td align="left">MIKE NIKITIN</td>
+<td align="left">4.0</td>
+<td align="left">1029506</td>
+<td align="left">MI</td>
+<td align="left">1604</td>
+<td align="left">10</td>
+<td align="left">15</td>
+<td align="left">NA</td>
+<td align="left">39</td>
+<td align="left">2</td>
+<td align="left">36</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">51</td>
+<td align="left">17</td>
+<td align="left">RONALD GRZEGORCZYK</td>
+<td align="left">4.0</td>
+<td align="left">1029770</td>
+<td align="left">MI</td>
+<td align="left">1629</td>
+<td align="left">48</td>
+<td align="left">41</td>
+<td align="left">26</td>
+<td align="left">2</td>
+<td align="left">23</td>
+<td align="left">22</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">54</td>
+<td align="left">18</td>
+<td align="left">DAVID SUNDEEN</td>
+<td align="left">4.0</td>
+<td align="left">1134209</td>
+<td align="left">MI</td>
+<td align="left">1600</td>
+<td align="left">47</td>
+<td align="left">9</td>
+<td align="left">1</td>
+<td align="left">32</td>
+<td align="left">19</td>
+<td align="left">38</td>
+<td align="left">10</td>
+</tr>
+<tr class="odd">
+<td align="left">57</td>
+<td align="left">19</td>
+<td align="left">DIPANKAR ROY</td>
+<td align="left">4.0</td>
+<td align="left">1486233</td>
+<td align="left">MI</td>
+<td align="left">1564</td>
+<td align="left">15</td>
+<td align="left">10</td>
+<td align="left">52</td>
+<td align="left">28</td>
+<td align="left">18</td>
+<td align="left">4</td>
+<td align="left">8</td>
+</tr>
+<tr class="even">
+<td align="left">60</td>
+<td align="left">20</td>
+<td align="left">JASON ZHENG</td>
+<td align="left">4.0</td>
+<td align="left">1452906</td>
+<td align="left">MI</td>
+<td align="left">1595</td>
+<td align="left">40</td>
+<td align="left">49</td>
+<td align="left">23</td>
+<td align="left">41</td>
+<td align="left">28</td>
+<td align="left">2</td>
+<td align="left">9</td>
+</tr>
+<tr class="odd">
+<td align="left">63</td>
+<td align="left">21</td>
+<td align="left">DINH DANG BUI</td>
+<td align="left">4.0</td>
+<td align="left">1549506</td>
+<td align="left">ON</td>
+<td align="left">1563</td>
+<td align="left">43</td>
+<td align="left">1</td>
+<td align="left">47</td>
+<td align="left">3</td>
+<td align="left">40</td>
+<td align="left">39</td>
+<td align="left">6</td>
+</tr>
+<tr class="even">
+<td align="left">66</td>
+<td align="left">22</td>
+<td align="left">EUGENE L MCCLURE</td>
+<td align="left">4.0</td>
+<td align="left">1240553</td>
+<td align="left">MI</td>
+<td align="left">1555</td>
+<td align="left">64</td>
+<td align="left">52</td>
+<td align="left">28</td>
+<td align="left">15</td>
+<td align="left">NA</td>
+<td align="left">17</td>
+<td align="left">40</td>
+</tr>
+<tr class="odd">
+<td align="left">69</td>
+<td align="left">23</td>
+<td align="left">ALAN BUI</td>
+<td align="left">4.0</td>
+<td align="left">1503014</td>
+<td align="left">ON</td>
+<td align="left">1363</td>
+<td align="left">4</td>
+<td align="left">43</td>
+<td align="left">20</td>
+<td align="left">58</td>
+<td align="left">17</td>
+<td align="left">37</td>
+<td align="left">46</td>
+</tr>
+<tr class="even">
+<td align="left">72</td>
+<td align="left">24</td>
+<td align="left">MICHAEL R ALDRICH</td>
+<td align="left">4.0</td>
+<td align="left">1346901</td>
+<td align="left">MI</td>
+<td align="left">1229</td>
+<td align="left">28</td>
+<td align="left">47</td>
+<td align="left">43</td>
+<td align="left">25</td>
+<td align="left">60</td>
+<td align="left">44</td>
+<td align="left">39</td>
+</tr>
+<tr class="odd">
+<td align="left">75</td>
+<td align="left">25</td>
+<td align="left">LOREN SCHWIEBERT</td>
+<td align="left">3.5</td>
+<td align="left">1248665</td>
+<td align="left">MI</td>
+<td align="left">1745</td>
+<td align="left">9</td>
+<td align="left">53</td>
+<td align="left">3</td>
+<td align="left">24</td>
+<td align="left">34</td>
+<td align="left">10</td>
+<td align="left">47</td>
+</tr>
+<tr class="even">
+<td align="left">78</td>
+<td align="left">26</td>
+<td align="left">MAX ZHU</td>
+<td align="left">3.5</td>
+<td align="left">1513152</td>
+<td align="left">ON</td>
+<td align="left">1579</td>
+<td align="left">49</td>
+<td align="left">40</td>
+<td align="left">17</td>
+<td align="left">4</td>
+<td align="left">9</td>
+<td align="left">32</td>
+<td align="left">11</td>
+</tr>
+<tr class="odd">
+<td align="left">81</td>
+<td align="left">27</td>
+<td align="left">GAURAV GIDWANI</td>
+<td align="left">3.5</td>
+<td align="left">1447656</td>
+<td align="left">MI</td>
+<td align="left">1552</td>
+<td align="left">51</td>
+<td align="left">13</td>
+<td align="left">46</td>
+<td align="left">37</td>
+<td align="left">14</td>
+<td align="left">6</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">84</td>
+<td align="left">28</td>
+<td align="left">SOFIA ADINA STANESCU-BELLU</td>
+<td align="left">3.5</td>
+<td align="left">1488295</td>
+<td align="left">MI</td>
+<td align="left">1507</td>
+<td align="left">24</td>
+<td align="left">4</td>
+<td align="left">22</td>
+<td align="left">19</td>
+<td align="left">20</td>
+<td align="left">8</td>
+<td align="left">36</td>
+</tr>
+<tr class="odd">
+<td align="left">87</td>
+<td align="left">29</td>
+<td align="left">CHIEDOZIE OKORIE</td>
+<td align="left">3.5</td>
+<td align="left">1532328</td>
+<td align="left">MI</td>
+<td align="left">1602</td>
+<td align="left">50</td>
+<td align="left">6</td>
+<td align="left">38</td>
+<td align="left">34</td>
+<td align="left">52</td>
+<td align="left">48</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">90</td>
+<td align="left">30</td>
+<td align="left">GEORGE AVERY JONES</td>
+<td align="left">3.5</td>
+<td align="left">1257717</td>
+<td align="left">ON</td>
+<td align="left">1522</td>
+<td align="left">52</td>
+<td align="left">64</td>
+<td align="left">15</td>
+<td align="left">55</td>
+<td align="left">31</td>
+<td align="left">61</td>
+<td align="left">50</td>
+</tr>
+<tr class="odd">
+<td align="left">93</td>
+<td align="left">31</td>
+<td align="left">RISHI SHETTY</td>
+<td align="left">3.5</td>
+<td align="left">1513161</td>
+<td align="left">MI</td>
+<td align="left">1494</td>
+<td align="left">58</td>
+<td align="left">55</td>
+<td align="left">64</td>
+<td align="left">10</td>
+<td align="left">30</td>
+<td align="left">50</td>
+<td align="left">14</td>
+</tr>
+<tr class="even">
+<td align="left">96</td>
+<td align="left">32</td>
+<td align="left">JOSHUA PHILIP MATHEWS</td>
+<td align="left">3.5</td>
+<td align="left">1407375</td>
+<td align="left">ON</td>
+<td align="left">1441</td>
+<td align="left">61</td>
+<td align="left">8</td>
+<td align="left">44</td>
+<td align="left">18</td>
+<td align="left">51</td>
+<td align="left">26</td>
+<td align="left">13</td>
+</tr>
+<tr class="odd">
+<td align="left">99</td>
+<td align="left">33</td>
+<td align="left">JADE GE</td>
+<td align="left">3.5</td>
+<td align="left">1469184</td>
+<td align="left">MI</td>
+<td align="left">1449</td>
+<td align="left">60</td>
+<td align="left">12</td>
+<td align="left">50</td>
+<td align="left">36</td>
+<td align="left">13</td>
+<td align="left">15</td>
+<td align="left">51</td>
+</tr>
+<tr class="even">
+<td align="left">102</td>
+<td align="left">34</td>
+<td align="left">MICHAEL JEFFERY THOMAS</td>
+<td align="left">3.5</td>
+<td align="left">1505180</td>
+<td align="left">MI</td>
+<td align="left">1399</td>
+<td align="left">6</td>
+<td align="left">60</td>
+<td align="left">37</td>
+<td align="left">29</td>
+<td align="left">25</td>
+<td align="left">11</td>
+<td align="left">52</td>
+</tr>
+<tr class="odd">
+<td align="left">105</td>
+<td align="left">35</td>
+<td align="left">JOSHUA DAVID LEE</td>
+<td align="left">3.5</td>
+<td align="left">1460139</td>
+<td align="left">MI</td>
+<td align="left">1438</td>
+<td align="left">46</td>
+<td align="left">38</td>
+<td align="left">56</td>
+<td align="left">6</td>
+<td align="left">57</td>
+<td align="left">52</td>
+<td align="left">48</td>
+</tr>
+<tr class="even">
+<td align="left">108</td>
+<td align="left">36</td>
+<td align="left">SIDDHARTH JHA</td>
+<td align="left">3.5</td>
+<td align="left">1477316</td>
+<td align="left">MI</td>
+<td align="left">1355</td>
+<td align="left">13</td>
+<td align="left">57</td>
+<td align="left">51</td>
+<td align="left">33</td>
+<td align="left">NA</td>
+<td align="left">16</td>
+<td align="left">28</td>
+</tr>
+<tr class="odd">
+<td align="left">111</td>
+<td align="left">37</td>
+<td align="left">AMIYATOSH PWNANANDAM</td>
+<td align="left">3.5</td>
+<td align="left">1548957</td>
+<td align="left">MI</td>
+<td align="left">980</td>
+<td align="left">NA</td>
+<td align="left">5</td>
+<td align="left">34</td>
+<td align="left">27</td>
+<td align="left">NA</td>
+<td align="left">23</td>
+<td align="left">61</td>
+</tr>
+<tr class="even">
+<td align="left">114</td>
+<td align="left">38</td>
+<td align="left">BRIAN LIU</td>
+<td align="left">3.0</td>
+<td align="left">1510852</td>
+<td align="left">MI</td>
+<td align="left">1423</td>
+<td align="left">11</td>
+<td align="left">35</td>
+<td align="left">29</td>
+<td align="left">12</td>
+<td align="left">NA</td>
+<td align="left">18</td>
+<td align="left">15</td>
+</tr>
+<tr class="odd">
+<td align="left">117</td>
+<td align="left">39</td>
+<td align="left">JOEL R HENDON</td>
+<td align="left">3.0</td>
+<td align="left">1292303</td>
+<td align="left">MI</td>
+<td align="left">1436</td>
+<td align="left">1</td>
+<td align="left">54</td>
+<td align="left">40</td>
+<td align="left">16</td>
+<td align="left">44</td>
+<td align="left">21</td>
+<td align="left">24</td>
+</tr>
+<tr class="even">
+<td align="left">120</td>
+<td align="left">40</td>
+<td align="left">FOREST ZHANG</td>
+<td align="left">3.0</td>
+<td align="left">1489271</td>
+<td align="left">MI</td>
+<td align="left">1348</td>
+<td align="left">20</td>
+<td align="left">26</td>
+<td align="left">39</td>
+<td align="left">59</td>
+<td align="left">21</td>
+<td align="left">56</td>
+<td align="left">22</td>
+</tr>
+<tr class="odd">
+<td align="left">123</td>
+<td align="left">41</td>
+<td align="left">KYLE WILLIAM MURPHY</td>
+<td align="left">3.0</td>
+<td align="left">1576144</td>
+<td align="left">MI</td>
+<td align="left">1403</td>
+<td align="left">59</td>
+<td align="left">17</td>
+<td align="left">58</td>
+<td align="left">20</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">126</td>
+<td align="left">42</td>
+<td align="left">JARED GE</td>
+<td align="left">3.0</td>
+<td align="left">1446232</td>
+<td align="left">MI</td>
+<td align="left">1332</td>
+<td align="left">12</td>
+<td align="left">50</td>
+<td align="left">57</td>
+<td align="left">60</td>
+<td align="left">61</td>
+<td align="left">64</td>
+<td align="left">56</td>
+</tr>
+<tr class="odd">
+<td align="left">129</td>
+<td align="left">43</td>
+<td align="left">ROBERT GLEN VASEY</td>
+<td align="left">3.0</td>
+<td align="left">1410106</td>
+<td align="left">MI</td>
+<td align="left">1283</td>
+<td align="left">21</td>
+<td align="left">23</td>
+<td align="left">24</td>
+<td align="left">63</td>
+<td align="left">59</td>
+<td align="left">46</td>
+<td align="left">55</td>
+</tr>
+<tr class="even">
+<td align="left">132</td>
+<td align="left">44</td>
+<td align="left">JUSTIN D SCHILLING</td>
+<td align="left">3.0</td>
+<td align="left">1532350</td>
+<td align="left">MI</td>
+<td align="left">1199</td>
+<td align="left">NA</td>
+<td align="left">14</td>
+<td align="left">32</td>
+<td align="left">53</td>
+<td align="left">39</td>
+<td align="left">24</td>
+<td align="left">59</td>
+</tr>
+<tr class="odd">
+<td align="left">135</td>
+<td align="left">45</td>
+<td align="left">DEREK YAN</td>
+<td align="left">3.0</td>
+<td align="left">1537280</td>
+<td align="left">MI</td>
+<td align="left">1242</td>
+<td align="left">5</td>
+<td align="left">51</td>
+<td align="left">60</td>
+<td align="left">56</td>
+<td align="left">63</td>
+<td align="left">55</td>
+<td align="left">58</td>
+</tr>
+<tr class="even">
+<td align="left">138</td>
+<td align="left">46</td>
+<td align="left">JACOB ALEXANDER LAVALLEY</td>
+<td align="left">3.0</td>
+<td align="left">1549098</td>
+<td align="left">MI</td>
+<td align="left">377</td>
+<td align="left">35</td>
+<td align="left">7</td>
+<td align="left">27</td>
+<td align="left">50</td>
+<td align="left">64</td>
+<td align="left">43</td>
+<td align="left">23</td>
+</tr>
+<tr class="odd">
+<td align="left">141</td>
+<td align="left">47</td>
+<td align="left">ERIC WRIGHT</td>
+<td align="left">2.5</td>
+<td align="left">1253311</td>
+<td align="left">MI</td>
+<td align="left">1362</td>
+<td align="left">18</td>
+<td align="left">24</td>
+<td align="left">21</td>
+<td align="left">61</td>
+<td align="left">8</td>
+<td align="left">51</td>
+<td align="left">25</td>
+</tr>
+<tr class="even">
+<td align="left">144</td>
+<td align="left">48</td>
+<td align="left">DANIEL KHAIN</td>
+<td align="left">2.5</td>
+<td align="left">1436916</td>
+<td align="left">MI</td>
+<td align="left">1382</td>
+<td align="left">17</td>
+<td align="left">63</td>
+<td align="left">NA</td>
+<td align="left">52</td>
+<td align="left">NA</td>
+<td align="left">29</td>
+<td align="left">35</td>
+</tr>
+<tr class="odd">
+<td align="left">147</td>
+<td align="left">49</td>
+<td align="left">MICHAEL J MARTIN</td>
+<td align="left">2.5</td>
+<td align="left">1253168</td>
+<td align="left">MI</td>
+<td align="left">1291</td>
+<td align="left">26</td>
+<td align="left">20</td>
+<td align="left">63</td>
+<td align="left">64</td>
+<td align="left">58</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">150</td>
+<td align="left">50</td>
+<td align="left">SHIVAM JHA</td>
+<td align="left">2.5</td>
+<td align="left">1477317</td>
+<td align="left">MI</td>
+<td align="left">1056</td>
+<td align="left">29</td>
+<td align="left">42</td>
+<td align="left">33</td>
+<td align="left">46</td>
+<td align="left">NA</td>
+<td align="left">31</td>
+<td align="left">30</td>
+</tr>
+<tr class="odd">
+<td align="left">153</td>
+<td align="left">51</td>
+<td align="left">TEJAS AYYAGARI</td>
+<td align="left">2.5</td>
+<td align="left">1520547</td>
+<td align="left">MI</td>
+<td align="left">1011</td>
+<td align="left">27</td>
+<td align="left">45</td>
+<td align="left">36</td>
+<td align="left">57</td>
+<td align="left">32</td>
+<td align="left">47</td>
+<td align="left">33</td>
+</tr>
+<tr class="even">
+<td align="left">156</td>
+<td align="left">52</td>
+<td align="left">ETHAN GUO</td>
+<td align="left">2.5</td>
+<td align="left">1491880</td>
+<td align="left">MI</td>
+<td align="left">935</td>
+<td align="left">30</td>
+<td align="left">22</td>
+<td align="left">19</td>
+<td align="left">48</td>
+<td align="left">29</td>
+<td align="left">35</td>
+<td align="left">34</td>
+</tr>
+<tr class="odd">
+<td align="left">159</td>
+<td align="left">53</td>
+<td align="left">JOSE C YBARRA</td>
+<td align="left">2.0</td>
+<td align="left">1257884</td>
+<td align="left">MI</td>
+<td align="left">1393</td>
+<td align="left">NA</td>
+<td align="left">25</td>
+<td align="left">NA</td>
+<td align="left">44</td>
+<td align="left">NA</td>
+<td align="left">57</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">162</td>
+<td align="left">54</td>
+<td align="left">LARRY HODGE</td>
+<td align="left">2.0</td>
+<td align="left">1283677</td>
+<td align="left">MI</td>
+<td align="left">1270</td>
+<td align="left">14</td>
+<td align="left">39</td>
+<td align="left">61</td>
+<td align="left">NA</td>
+<td align="left">15</td>
+<td align="left">59</td>
+<td align="left">64</td>
+</tr>
+<tr class="odd">
+<td align="left">165</td>
+<td align="left">55</td>
+<td align="left">ALEX KONG</td>
+<td align="left">2.0</td>
+<td align="left">1541257</td>
+<td align="left">MI</td>
+<td align="left">1186</td>
+<td align="left">62</td>
+<td align="left">31</td>
+<td align="left">10</td>
+<td align="left">30</td>
+<td align="left">NA</td>
+<td align="left">45</td>
+<td align="left">43</td>
+</tr>
+<tr class="even">
+<td align="left">168</td>
+<td align="left">56</td>
+<td align="left">MARISA RICCI</td>
+<td align="left">2.0</td>
+<td align="left">1467988</td>
+<td align="left">MI</td>
+<td align="left">1153</td>
+<td align="left">NA</td>
+<td align="left">11</td>
+<td align="left">35</td>
+<td align="left">45</td>
+<td align="left">NA</td>
+<td align="left">40</td>
+<td align="left">42</td>
+</tr>
+<tr class="odd">
+<td align="left">171</td>
+<td align="left">57</td>
+<td align="left">MICHAEL LU</td>
+<td align="left">2.0</td>
+<td align="left">1511333</td>
+<td align="left">MI</td>
+<td align="left">1092</td>
+<td align="left">7</td>
+<td align="left">36</td>
+<td align="left">42</td>
+<td align="left">51</td>
+<td align="left">35</td>
+<td align="left">53</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">174</td>
+<td align="left">58</td>
+<td align="left">VIRAJ MOHILE</td>
+<td align="left">2.0</td>
+<td align="left">1470036</td>
+<td align="left">MI</td>
+<td align="left">917</td>
+<td align="left">31</td>
+<td align="left">2</td>
+<td align="left">41</td>
+<td align="left">23</td>
+<td align="left">49</td>
+<td align="left">NA</td>
+<td align="left">45</td>
+</tr>
+<tr class="odd">
+<td align="left">177</td>
+<td align="left">59</td>
+<td align="left">SEAN M MC CORMICK</td>
+<td align="left">2.0</td>
+<td align="left">1284103</td>
+<td align="left">MI</td>
+<td align="left">853</td>
+<td align="left">41</td>
+<td align="left">NA</td>
+<td align="left">9</td>
+<td align="left">40</td>
+<td align="left">43</td>
+<td align="left">54</td>
+<td align="left">44</td>
+</tr>
+<tr class="even">
+<td align="left">180</td>
+<td align="left">60</td>
+<td align="left">JULIA SHEN</td>
+<td align="left">1.5</td>
+<td align="left">1457926</td>
+<td align="left">MI</td>
+<td align="left">967</td>
+<td align="left">33</td>
+<td align="left">34</td>
+<td align="left">45</td>
+<td align="left">42</td>
+<td align="left">24</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">183</td>
+<td align="left">61</td>
+<td align="left">JEZZEL FARKAS</td>
+<td align="left">1.5</td>
+<td align="left">1577159</td>
+<td align="left">ON</td>
+<td align="left">955</td>
+<td align="left">32</td>
+<td align="left">3</td>
+<td align="left">54</td>
+<td align="left">47</td>
+<td align="left">42</td>
+<td align="left">30</td>
+<td align="left">37</td>
+</tr>
+<tr class="even">
+<td align="left">186</td>
+<td align="left">62</td>
+<td align="left">ASHWIN BALAJI</td>
+<td align="left">1.0</td>
+<td align="left">1521954</td>
+<td align="left">MI</td>
+<td align="left">1530</td>
+<td align="left">55</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">189</td>
+<td align="left">63</td>
+<td align="left">THOMAS JOSEPH HOSMER</td>
+<td align="left">1.0</td>
+<td align="left">1505709</td>
+<td align="left">MI</td>
+<td align="left">1175</td>
+<td align="left">2</td>
+<td align="left">48</td>
+<td align="left">49</td>
+<td align="left">43</td>
+<td align="left">45</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">192</td>
+<td align="left">64</td>
+<td align="left">BEN LI</td>
+<td align="left">1.0</td>
+<td align="left">1500656</td>
+<td align="left">MI</td>
+<td align="left">1163</td>
+<td align="left">22</td>
+<td align="left">30</td>
+<td align="left">31</td>
+<td align="left">49</td>
+<td align="left">46</td>
+<td align="left">42</td>
+<td align="left">54</td>
+</tr>
+</tbody>
+</table>
+<p>##Data Calculations</p>
+<pre class="r"><code>#create a matrix and use a nested for loop to find and replace ID with Pre-rating
+new_round &lt;- chess_new_data[7:13]
+
+match_round &lt;- matrix(unlist(new_round), nrow = 64, ncol = 7)
+
+for(x in 1:nrow(match_round)){
+  
+  for(y in 1:ncol(match_round)){
+    
+    if(!is.na(match_round[x, y])){ 
+      index &lt;- match_round[x, y] 
+      index &lt;- strtoi(index, base=0L) 
+      match_round[x,y] = strtoi(player_pre_rating[index])
+    }
+  }
+}
+#change the matrix to a numeric data type
+calc_round &lt;- matrix(as.numeric(match_round), nrow = 64, ncol = 7)
+
+#calculate the average of the opponent&#39;s pre-rating
+
+chess_new_data[&#39;Opponent Avg Rating&#39;] &lt;- round(rowMeans(calc_round, na.rm = TRUE))
+
+knitr::kable(chess_new_data)</code></pre>
+<table>
+<colgroup>
+<col width="2%" />
+<col width="1%" />
+<col width="15%" />
+<col width="7%" />
+<col width="8%" />
+<col width="7%" />
+<col width="10%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">ID</th>
+<th align="left">Player Name</th>
+<th align="left">Total Points</th>
+<th align="left">Player USCF ID</th>
+<th align="left">Player State</th>
+<th align="left">Player Pre-Rating</th>
+<th align="left">Round 1</th>
+<th align="left">Round 2</th>
+<th align="left">Round 3</th>
+<th align="left">Round 4</th>
+<th align="left">Round 5</th>
+<th align="left">Round 6</th>
+<th align="left">Round 7</th>
+<th align="right">Opponent Avg Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">1</td>
+<td align="left">GARY HUA</td>
+<td align="left">6.0</td>
+<td align="left">1544589</td>
+<td align="left">ON</td>
+<td align="left">1794</td>
+<td align="left">39</td>
+<td align="left">21</td>
+<td align="left">18</td>
+<td align="left">14</td>
+<td align="left">7</td>
+<td align="left">12</td>
+<td align="left">4</td>
+<td align="right">1605</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">2</td>
+<td align="left">DAKSHESH DARURI</td>
+<td align="left">6.0</td>
+<td align="left">1459890</td>
+<td align="left">MI</td>
+<td align="left">1553</td>
+<td align="left">63</td>
+<td align="left">58</td>
+<td align="left">4</td>
+<td align="left">17</td>
+<td align="left">16</td>
+<td align="left">20</td>
+<td align="left">7</td>
+<td align="right">1469</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">3</td>
+<td align="left">ADITYA BAJAJ</td>
+<td align="left">6.0</td>
+<td align="left">1495960</td>
+<td align="left">MI</td>
+<td align="left">1384</td>
+<td align="left">8</td>
+<td align="left">61</td>
+<td align="left">25</td>
+<td align="left">21</td>
+<td align="left">11</td>
+<td align="left">13</td>
+<td align="left">12</td>
+<td align="right">1564</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">4</td>
+<td align="left">PATRICK H SCHILLING</td>
+<td align="left">5.5</td>
+<td align="left">1261604</td>
+<td align="left">MI</td>
+<td align="left">1716</td>
+<td align="left">23</td>
+<td align="left">28</td>
+<td align="left">2</td>
+<td align="left">26</td>
+<td align="left">5</td>
+<td align="left">19</td>
+<td align="left">1</td>
+<td align="right">1574</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="left">5</td>
+<td align="left">HANSHI ZUO</td>
+<td align="left">5.5</td>
+<td align="left">1460153</td>
+<td align="left">MI</td>
+<td align="left">1655</td>
+<td align="left">45</td>
+<td align="left">37</td>
+<td align="left">12</td>
+<td align="left">13</td>
+<td align="left">4</td>
+<td align="left">14</td>
+<td align="left">17</td>
+<td align="right">1501</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">6</td>
+<td align="left">HANSEN SONG</td>
+<td align="left">5.0</td>
+<td align="left">1505520</td>
+<td align="left">OH</td>
+<td align="left">1686</td>
+<td align="left">34</td>
+<td align="left">29</td>
+<td align="left">11</td>
+<td align="left">35</td>
+<td align="left">10</td>
+<td align="left">27</td>
+<td align="left">21</td>
+<td align="right">1519</td>
+</tr>
+<tr class="odd">
+<td align="left">21</td>
+<td align="left">7</td>
+<td align="left">GARY DEE SWATHELL</td>
+<td align="left">5.0</td>
+<td align="left">1114637</td>
+<td align="left">MI</td>
+<td align="left">1649</td>
+<td align="left">57</td>
+<td align="left">46</td>
+<td align="left">13</td>
+<td align="left">11</td>
+<td align="left">1</td>
+<td align="left">9</td>
+<td align="left">2</td>
+<td align="right">1372</td>
+</tr>
+<tr class="even">
+<td align="left">24</td>
+<td align="left">8</td>
+<td align="left">EZEKIEL HOUGHTON</td>
+<td align="left">5.0</td>
+<td align="left">1514225</td>
+<td align="left">MI</td>
+<td align="left">1641</td>
+<td align="left">3</td>
+<td align="left">32</td>
+<td align="left">14</td>
+<td align="left">9</td>
+<td align="left">47</td>
+<td align="left">28</td>
+<td align="left">19</td>
+<td align="right">1468</td>
+</tr>
+<tr class="odd">
+<td align="left">27</td>
+<td align="left">9</td>
+<td align="left">STEFANO LEE</td>
+<td align="left">5.0</td>
+<td align="left">1495452</td>
+<td align="left">ON</td>
+<td align="left">1411</td>
+<td align="left">25</td>
+<td align="left">18</td>
+<td align="left">59</td>
+<td align="left">8</td>
+<td align="left">26</td>
+<td align="left">7</td>
+<td align="left">20</td>
+<td align="right">1523</td>
+</tr>
+<tr class="even">
+<td align="left">30</td>
+<td align="left">10</td>
+<td align="left">ANVIT RAO</td>
+<td align="left">5.0</td>
+<td align="left">1415036</td>
+<td align="left">MI</td>
+<td align="left">1365</td>
+<td align="left">16</td>
+<td align="left">19</td>
+<td align="left">55</td>
+<td align="left">31</td>
+<td align="left">6</td>
+<td align="left">25</td>
+<td align="left">18</td>
+<td align="right">1554</td>
+</tr>
+<tr class="odd">
+<td align="left">33</td>
+<td align="left">11</td>
+<td align="left">CAMERON WILLIAM MC LEMAN</td>
+<td align="left">4.5</td>
+<td align="left">1258158</td>
+<td align="left">MI</td>
+<td align="left">1712</td>
+<td align="left">38</td>
+<td align="left">56</td>
+<td align="left">6</td>
+<td align="left">7</td>
+<td align="left">3</td>
+<td align="left">34</td>
+<td align="left">26</td>
+<td align="right">1468</td>
+</tr>
+<tr class="even">
+<td align="left">36</td>
+<td align="left">12</td>
+<td align="left">KENNETH J TACK</td>
+<td align="left">4.5</td>
+<td align="left">1268125</td>
+<td align="left">MI</td>
+<td align="left">1663</td>
+<td align="left">42</td>
+<td align="left">33</td>
+<td align="left">5</td>
+<td align="left">38</td>
+<td align="left">NA</td>
+<td align="left">1</td>
+<td align="left">3</td>
+<td align="right">1506</td>
+</tr>
+<tr class="odd">
+<td align="left">39</td>
+<td align="left">13</td>
+<td align="left">TORRANCE HENRY JR</td>
+<td align="left">4.5</td>
+<td align="left">1508299</td>
+<td align="left">MI</td>
+<td align="left">1666</td>
+<td align="left">36</td>
+<td align="left">27</td>
+<td align="left">7</td>
+<td align="left">5</td>
+<td align="left">33</td>
+<td align="left">3</td>
+<td align="left">32</td>
+<td align="right">1498</td>
+</tr>
+<tr class="even">
+<td align="left">42</td>
+<td align="left">14</td>
+<td align="left">BRADLEY SHAW</td>
+<td align="left">4.5</td>
+<td align="left">1013149</td>
+<td align="left">MI</td>
+<td align="left">1610</td>
+<td align="left">54</td>
+<td align="left">44</td>
+<td align="left">8</td>
+<td align="left">1</td>
+<td align="left">27</td>
+<td align="left">5</td>
+<td align="left">31</td>
+<td align="right">1515</td>
+</tr>
+<tr class="odd">
+<td align="left">45</td>
+<td align="left">15</td>
+<td align="left">ZACHARY JAMES HOUGHTON</td>
+<td align="left">4.5</td>
+<td align="left">1561913</td>
+<td align="left">MI</td>
+<td align="left">1220</td>
+<td align="left">19</td>
+<td align="left">16</td>
+<td align="left">30</td>
+<td align="left">22</td>
+<td align="left">54</td>
+<td align="left">33</td>
+<td align="left">38</td>
+<td align="right">1484</td>
+</tr>
+<tr class="even">
+<td align="left">48</td>
+<td align="left">16</td>
+<td align="left">MIKE NIKITIN</td>
+<td align="left">4.0</td>
+<td align="left">1029506</td>
+<td align="left">MI</td>
+<td align="left">1604</td>
+<td align="left">10</td>
+<td align="left">15</td>
+<td align="left">NA</td>
+<td align="left">39</td>
+<td align="left">2</td>
+<td align="left">36</td>
+<td align="left">NA</td>
+<td align="right">1386</td>
+</tr>
+<tr class="odd">
+<td align="left">51</td>
+<td align="left">17</td>
+<td align="left">RONALD GRZEGORCZYK</td>
+<td align="left">4.0</td>
+<td align="left">1029770</td>
+<td align="left">MI</td>
+<td align="left">1629</td>
+<td align="left">48</td>
+<td align="left">41</td>
+<td align="left">26</td>
+<td align="left">2</td>
+<td align="left">23</td>
+<td align="left">22</td>
+<td align="left">5</td>
+<td align="right">1499</td>
+</tr>
+<tr class="even">
+<td align="left">54</td>
+<td align="left">18</td>
+<td align="left">DAVID SUNDEEN</td>
+<td align="left">4.0</td>
+<td align="left">1134209</td>
+<td align="left">MI</td>
+<td align="left">1600</td>
+<td align="left">47</td>
+<td align="left">9</td>
+<td align="left">1</td>
+<td align="left">32</td>
+<td align="left">19</td>
+<td align="left">38</td>
+<td align="left">10</td>
+<td align="right">1480</td>
+</tr>
+<tr class="odd">
+<td align="left">57</td>
+<td align="left">19</td>
+<td align="left">DIPANKAR ROY</td>
+<td align="left">4.0</td>
+<td align="left">1486233</td>
+<td align="left">MI</td>
+<td align="left">1564</td>
+<td align="left">15</td>
+<td align="left">10</td>
+<td align="left">52</td>
+<td align="left">28</td>
+<td align="left">18</td>
+<td align="left">4</td>
+<td align="left">8</td>
+<td align="right">1426</td>
+</tr>
+<tr class="even">
+<td align="left">60</td>
+<td align="left">20</td>
+<td align="left">JASON ZHENG</td>
+<td align="left">4.0</td>
+<td align="left">1452906</td>
+<td align="left">MI</td>
+<td align="left">1595</td>
+<td align="left">40</td>
+<td align="left">49</td>
+<td align="left">23</td>
+<td align="left">41</td>
+<td align="left">28</td>
+<td align="left">2</td>
+<td align="left">9</td>
+<td align="right">1411</td>
+</tr>
+<tr class="odd">
+<td align="left">63</td>
+<td align="left">21</td>
+<td align="left">DINH DANG BUI</td>
+<td align="left">4.0</td>
+<td align="left">1549506</td>
+<td align="left">ON</td>
+<td align="left">1563</td>
+<td align="left">43</td>
+<td align="left">1</td>
+<td align="left">47</td>
+<td align="left">3</td>
+<td align="left">40</td>
+<td align="left">39</td>
+<td align="left">6</td>
+<td align="right">1470</td>
+</tr>
+<tr class="even">
+<td align="left">66</td>
+<td align="left">22</td>
+<td align="left">EUGENE L MCCLURE</td>
+<td align="left">4.0</td>
+<td align="left">1240553</td>
+<td align="left">MI</td>
+<td align="left">1555</td>
+<td align="left">64</td>
+<td align="left">52</td>
+<td align="left">28</td>
+<td align="left">15</td>
+<td align="left">NA</td>
+<td align="left">17</td>
+<td align="left">40</td>
+<td align="right">1300</td>
+</tr>
+<tr class="odd">
+<td align="left">69</td>
+<td align="left">23</td>
+<td align="left">ALAN BUI</td>
+<td align="left">4.0</td>
+<td align="left">1503014</td>
+<td align="left">ON</td>
+<td align="left">1363</td>
+<td align="left">4</td>
+<td align="left">43</td>
+<td align="left">20</td>
+<td align="left">58</td>
+<td align="left">17</td>
+<td align="left">37</td>
+<td align="left">46</td>
+<td align="right">1214</td>
+</tr>
+<tr class="even">
+<td align="left">72</td>
+<td align="left">24</td>
+<td align="left">MICHAEL R ALDRICH</td>
+<td align="left">4.0</td>
+<td align="left">1346901</td>
+<td align="left">MI</td>
+<td align="left">1229</td>
+<td align="left">28</td>
+<td align="left">47</td>
+<td align="left">43</td>
+<td align="left">25</td>
+<td align="left">60</td>
+<td align="left">44</td>
+<td align="left">39</td>
+<td align="right">1357</td>
+</tr>
+<tr class="odd">
+<td align="left">75</td>
+<td align="left">25</td>
+<td align="left">LOREN SCHWIEBERT</td>
+<td align="left">3.5</td>
+<td align="left">1248665</td>
+<td align="left">MI</td>
+<td align="left">1745</td>
+<td align="left">9</td>
+<td align="left">53</td>
+<td align="left">3</td>
+<td align="left">24</td>
+<td align="left">34</td>
+<td align="left">10</td>
+<td align="left">47</td>
+<td align="right">1363</td>
+</tr>
+<tr class="even">
+<td align="left">78</td>
+<td align="left">26</td>
+<td align="left">MAX ZHU</td>
+<td align="left">3.5</td>
+<td align="left">1513152</td>
+<td align="left">ON</td>
+<td align="left">1579</td>
+<td align="left">49</td>
+<td align="left">40</td>
+<td align="left">17</td>
+<td align="left">4</td>
+<td align="left">9</td>
+<td align="left">32</td>
+<td align="left">11</td>
+<td align="right">1507</td>
+</tr>
+<tr class="odd">
+<td align="left">81</td>
+<td align="left">27</td>
+<td align="left">GAURAV GIDWANI</td>
+<td align="left">3.5</td>
+<td align="left">1447656</td>
+<td align="left">MI</td>
+<td align="left">1552</td>
+<td align="left">51</td>
+<td align="left">13</td>
+<td align="left">46</td>
+<td align="left">37</td>
+<td align="left">14</td>
+<td align="left">6</td>
+<td align="left">NA</td>
+<td align="right">1222</td>
+</tr>
+<tr class="even">
+<td align="left">84</td>
+<td align="left">28</td>
+<td align="left">SOFIA ADINA STANESCU-BELLU</td>
+<td align="left">3.5</td>
+<td align="left">1488295</td>
+<td align="left">MI</td>
+<td align="left">1507</td>
+<td align="left">24</td>
+<td align="left">4</td>
+<td align="left">22</td>
+<td align="left">19</td>
+<td align="left">20</td>
+<td align="left">8</td>
+<td align="left">36</td>
+<td align="right">1522</td>
+</tr>
+<tr class="odd">
+<td align="left">87</td>
+<td align="left">29</td>
+<td align="left">CHIEDOZIE OKORIE</td>
+<td align="left">3.5</td>
+<td align="left">1532328</td>
+<td align="left">MI</td>
+<td align="left">1602</td>
+<td align="left">50</td>
+<td align="left">6</td>
+<td align="left">38</td>
+<td align="left">34</td>
+<td align="left">52</td>
+<td align="left">48</td>
+<td align="left">NA</td>
+<td align="right">1314</td>
+</tr>
+<tr class="even">
+<td align="left">90</td>
+<td align="left">30</td>
+<td align="left">GEORGE AVERY JONES</td>
+<td align="left">3.5</td>
+<td align="left">1257717</td>
+<td align="left">ON</td>
+<td align="left">1522</td>
+<td align="left">52</td>
+<td align="left">64</td>
+<td align="left">15</td>
+<td align="left">55</td>
+<td align="left">31</td>
+<td align="left">61</td>
+<td align="left">50</td>
+<td align="right">1144</td>
+</tr>
+<tr class="odd">
+<td align="left">93</td>
+<td align="left">31</td>
+<td align="left">RISHI SHETTY</td>
+<td align="left">3.5</td>
+<td align="left">1513161</td>
+<td align="left">MI</td>
+<td align="left">1494</td>
+<td align="left">58</td>
+<td align="left">55</td>
+<td align="left">64</td>
+<td align="left">10</td>
+<td align="left">30</td>
+<td align="left">50</td>
+<td align="left">14</td>
+<td align="right">1260</td>
+</tr>
+<tr class="even">
+<td align="left">96</td>
+<td align="left">32</td>
+<td align="left">JOSHUA PHILIP MATHEWS</td>
+<td align="left">3.5</td>
+<td align="left">1407375</td>
+<td align="left">ON</td>
+<td align="left">1441</td>
+<td align="left">61</td>
+<td align="left">8</td>
+<td align="left">44</td>
+<td align="left">18</td>
+<td align="left">51</td>
+<td align="left">26</td>
+<td align="left">13</td>
+<td align="right">1379</td>
+</tr>
+<tr class="odd">
+<td align="left">99</td>
+<td align="left">33</td>
+<td align="left">JADE GE</td>
+<td align="left">3.5</td>
+<td align="left">1469184</td>
+<td align="left">MI</td>
+<td align="left">1449</td>
+<td align="left">60</td>
+<td align="left">12</td>
+<td align="left">50</td>
+<td align="left">36</td>
+<td align="left">13</td>
+<td align="left">15</td>
+<td align="left">51</td>
+<td align="right">1277</td>
+</tr>
+<tr class="even">
+<td align="left">102</td>
+<td align="left">34</td>
+<td align="left">MICHAEL JEFFERY THOMAS</td>
+<td align="left">3.5</td>
+<td align="left">1505180</td>
+<td align="left">MI</td>
+<td align="left">1399</td>
+<td align="left">6</td>
+<td align="left">60</td>
+<td align="left">37</td>
+<td align="left">29</td>
+<td align="left">25</td>
+<td align="left">11</td>
+<td align="left">52</td>
+<td align="right">1375</td>
+</tr>
+<tr class="odd">
+<td align="left">105</td>
+<td align="left">35</td>
+<td align="left">JOSHUA DAVID LEE</td>
+<td align="left">3.5</td>
+<td align="left">1460139</td>
+<td align="left">MI</td>
+<td align="left">1438</td>
+<td align="left">46</td>
+<td align="left">38</td>
+<td align="left">56</td>
+<td align="left">6</td>
+<td align="left">57</td>
+<td align="left">52</td>
+<td align="left">48</td>
+<td align="right">1150</td>
+</tr>
+<tr class="even">
+<td align="left">108</td>
+<td align="left">36</td>
+<td align="left">SIDDHARTH JHA</td>
+<td align="left">3.5</td>
+<td align="left">1477316</td>
+<td align="left">MI</td>
+<td align="left">1355</td>
+<td align="left">13</td>
+<td align="left">57</td>
+<td align="left">51</td>
+<td align="left">33</td>
+<td align="left">NA</td>
+<td align="left">16</td>
+<td align="left">28</td>
+<td align="right">1388</td>
+</tr>
+<tr class="odd">
+<td align="left">111</td>
+<td align="left">37</td>
+<td align="left">AMIYATOSH PWNANANDAM</td>
+<td align="left">3.5</td>
+<td align="left">1548957</td>
+<td align="left">MI</td>
+<td align="left">980</td>
+<td align="left">NA</td>
+<td align="left">5</td>
+<td align="left">34</td>
+<td align="left">27</td>
+<td align="left">NA</td>
+<td align="left">23</td>
+<td align="left">61</td>
+<td align="right">1385</td>
+</tr>
+<tr class="even">
+<td align="left">114</td>
+<td align="left">38</td>
+<td align="left">BRIAN LIU</td>
+<td align="left">3.0</td>
+<td align="left">1510852</td>
+<td align="left">MI</td>
+<td align="left">1423</td>
+<td align="left">11</td>
+<td align="left">35</td>
+<td align="left">29</td>
+<td align="left">12</td>
+<td align="left">NA</td>
+<td align="left">18</td>
+<td align="left">15</td>
+<td align="right">1539</td>
+</tr>
+<tr class="odd">
+<td align="left">117</td>
+<td align="left">39</td>
+<td align="left">JOEL R HENDON</td>
+<td align="left">3.0</td>
+<td align="left">1292303</td>
+<td align="left">MI</td>
+<td align="left">1436</td>
+<td align="left">1</td>
+<td align="left">54</td>
+<td align="left">40</td>
+<td align="left">16</td>
+<td align="left">44</td>
+<td align="left">21</td>
+<td align="left">24</td>
+<td align="right">1430</td>
+</tr>
+<tr class="even">
+<td align="left">120</td>
+<td align="left">40</td>
+<td align="left">FOREST ZHANG</td>
+<td align="left">3.0</td>
+<td align="left">1489271</td>
+<td align="left">MI</td>
+<td align="left">1348</td>
+<td align="left">20</td>
+<td align="left">26</td>
+<td align="left">39</td>
+<td align="left">59</td>
+<td align="left">21</td>
+<td align="left">56</td>
+<td align="left">22</td>
+<td align="right">1391</td>
+</tr>
+<tr class="odd">
+<td align="left">123</td>
+<td align="left">41</td>
+<td align="left">KYLE WILLIAM MURPHY</td>
+<td align="left">3.0</td>
+<td align="left">1576144</td>
+<td align="left">MI</td>
+<td align="left">1403</td>
+<td align="left">59</td>
+<td align="left">17</td>
+<td align="left">58</td>
+<td align="left">20</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">1248</td>
+</tr>
+<tr class="even">
+<td align="left">126</td>
+<td align="left">42</td>
+<td align="left">JARED GE</td>
+<td align="left">3.0</td>
+<td align="left">1446232</td>
+<td align="left">MI</td>
+<td align="left">1332</td>
+<td align="left">12</td>
+<td align="left">50</td>
+<td align="left">57</td>
+<td align="left">60</td>
+<td align="left">61</td>
+<td align="left">64</td>
+<td align="left">56</td>
+<td align="right">1150</td>
+</tr>
+<tr class="odd">
+<td align="left">129</td>
+<td align="left">43</td>
+<td align="left">ROBERT GLEN VASEY</td>
+<td align="left">3.0</td>
+<td align="left">1410106</td>
+<td align="left">MI</td>
+<td align="left">1283</td>
+<td align="left">21</td>
+<td align="left">23</td>
+<td align="left">24</td>
+<td align="left">63</td>
+<td align="left">59</td>
+<td align="left">46</td>
+<td align="left">55</td>
+<td align="right">1107</td>
+</tr>
+<tr class="even">
+<td align="left">132</td>
+<td align="left">44</td>
+<td align="left">JUSTIN D SCHILLING</td>
+<td align="left">3.0</td>
+<td align="left">1532350</td>
+<td align="left">MI</td>
+<td align="left">1199</td>
+<td align="left">NA</td>
+<td align="left">14</td>
+<td align="left">32</td>
+<td align="left">53</td>
+<td align="left">39</td>
+<td align="left">24</td>
+<td align="left">59</td>
+<td align="right">1327</td>
+</tr>
+<tr class="odd">
+<td align="left">135</td>
+<td align="left">45</td>
+<td align="left">DEREK YAN</td>
+<td align="left">3.0</td>
+<td align="left">1537280</td>
+<td align="left">MI</td>
+<td align="left">1242</td>
+<td align="left">5</td>
+<td align="left">51</td>
+<td align="left">60</td>
+<td align="left">56</td>
+<td align="left">63</td>
+<td align="left">55</td>
+<td align="left">58</td>
+<td align="right">1152</td>
+</tr>
+<tr class="even">
+<td align="left">138</td>
+<td align="left">46</td>
+<td align="left">JACOB ALEXANDER LAVALLEY</td>
+<td align="left">3.0</td>
+<td align="left">1549098</td>
+<td align="left">MI</td>
+<td align="left">377</td>
+<td align="left">35</td>
+<td align="left">7</td>
+<td align="left">27</td>
+<td align="left">50</td>
+<td align="left">64</td>
+<td align="left">43</td>
+<td align="left">23</td>
+<td align="right">1358</td>
+</tr>
+<tr class="odd">
+<td align="left">141</td>
+<td align="left">47</td>
+<td align="left">ERIC WRIGHT</td>
+<td align="left">2.5</td>
+<td align="left">1253311</td>
+<td align="left">MI</td>
+<td align="left">1362</td>
+<td align="left">18</td>
+<td align="left">24</td>
+<td align="left">21</td>
+<td align="left">61</td>
+<td align="left">8</td>
+<td align="left">51</td>
+<td align="left">25</td>
+<td align="right">1392</td>
+</tr>
+<tr class="even">
+<td align="left">144</td>
+<td align="left">48</td>
+<td align="left">DANIEL KHAIN</td>
+<td align="left">2.5</td>
+<td align="left">1436916</td>
+<td align="left">MI</td>
+<td align="left">1382</td>
+<td align="left">17</td>
+<td align="left">63</td>
+<td align="left">NA</td>
+<td align="left">52</td>
+<td align="left">NA</td>
+<td align="left">29</td>
+<td align="left">35</td>
+<td align="right">1356</td>
+</tr>
+<tr class="odd">
+<td align="left">147</td>
+<td align="left">49</td>
+<td align="left">MICHAEL J MARTIN</td>
+<td align="left">2.5</td>
+<td align="left">1253168</td>
+<td align="left">MI</td>
+<td align="left">1291</td>
+<td align="left">26</td>
+<td align="left">20</td>
+<td align="left">63</td>
+<td align="left">64</td>
+<td align="left">58</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">1286</td>
+</tr>
+<tr class="even">
+<td align="left">150</td>
+<td align="left">50</td>
+<td align="left">SHIVAM JHA</td>
+<td align="left">2.5</td>
+<td align="left">1477317</td>
+<td align="left">MI</td>
+<td align="left">1056</td>
+<td align="left">29</td>
+<td align="left">42</td>
+<td align="left">33</td>
+<td align="left">46</td>
+<td align="left">NA</td>
+<td align="left">31</td>
+<td align="left">30</td>
+<td align="right">1296</td>
+</tr>
+<tr class="odd">
+<td align="left">153</td>
+<td align="left">51</td>
+<td align="left">TEJAS AYYAGARI</td>
+<td align="left">2.5</td>
+<td align="left">1520547</td>
+<td align="left">MI</td>
+<td align="left">1011</td>
+<td align="left">27</td>
+<td align="left">45</td>
+<td align="left">36</td>
+<td align="left">57</td>
+<td align="left">32</td>
+<td align="left">47</td>
+<td align="left">33</td>
+<td align="right">1356</td>
+</tr>
+<tr class="even">
+<td align="left">156</td>
+<td align="left">52</td>
+<td align="left">ETHAN GUO</td>
+<td align="left">2.5</td>
+<td align="left">1491880</td>
+<td align="left">MI</td>
+<td align="left">935</td>
+<td align="left">30</td>
+<td align="left">22</td>
+<td align="left">19</td>
+<td align="left">48</td>
+<td align="left">29</td>
+<td align="left">35</td>
+<td align="left">34</td>
+<td align="right">1495</td>
+</tr>
+<tr class="odd">
+<td align="left">159</td>
+<td align="left">53</td>
+<td align="left">JOSE C YBARRA</td>
+<td align="left">2.0</td>
+<td align="left">1257884</td>
+<td align="left">MI</td>
+<td align="left">1393</td>
+<td align="left">NA</td>
+<td align="left">25</td>
+<td align="left">NA</td>
+<td align="left">44</td>
+<td align="left">NA</td>
+<td align="left">57</td>
+<td align="left">NA</td>
+<td align="right">1345</td>
+</tr>
+<tr class="even">
+<td align="left">162</td>
+<td align="left">54</td>
+<td align="left">LARRY HODGE</td>
+<td align="left">2.0</td>
+<td align="left">1283677</td>
+<td align="left">MI</td>
+<td align="left">1270</td>
+<td align="left">14</td>
+<td align="left">39</td>
+<td align="left">61</td>
+<td align="left">NA</td>
+<td align="left">15</td>
+<td align="left">59</td>
+<td align="left">64</td>
+<td align="right">1206</td>
+</tr>
+<tr class="odd">
+<td align="left">165</td>
+<td align="left">55</td>
+<td align="left">ALEX KONG</td>
+<td align="left">2.0</td>
+<td align="left">1541257</td>
+<td align="left">MI</td>
+<td align="left">1186</td>
+<td align="left">62</td>
+<td align="left">31</td>
+<td align="left">10</td>
+<td align="left">30</td>
+<td align="left">NA</td>
+<td align="left">45</td>
+<td align="left">43</td>
+<td align="right">1406</td>
+</tr>
+<tr class="even">
+<td align="left">168</td>
+<td align="left">56</td>
+<td align="left">MARISA RICCI</td>
+<td align="left">2.0</td>
+<td align="left">1467988</td>
+<td align="left">MI</td>
+<td align="left">1153</td>
+<td align="left">NA</td>
+<td align="left">11</td>
+<td align="left">35</td>
+<td align="left">45</td>
+<td align="left">NA</td>
+<td align="left">40</td>
+<td align="left">42</td>
+<td align="right">1414</td>
+</tr>
+<tr class="odd">
+<td align="left">171</td>
+<td align="left">57</td>
+<td align="left">MICHAEL LU</td>
+<td align="left">2.0</td>
+<td align="left">1511333</td>
+<td align="left">MI</td>
+<td align="left">1092</td>
+<td align="left">7</td>
+<td align="left">36</td>
+<td align="left">42</td>
+<td align="left">51</td>
+<td align="left">35</td>
+<td align="left">53</td>
+<td align="left">NA</td>
+<td align="right">1363</td>
+</tr>
+<tr class="even">
+<td align="left">174</td>
+<td align="left">58</td>
+<td align="left">VIRAJ MOHILE</td>
+<td align="left">2.0</td>
+<td align="left">1470036</td>
+<td align="left">MI</td>
+<td align="left">917</td>
+<td align="left">31</td>
+<td align="left">2</td>
+<td align="left">41</td>
+<td align="left">23</td>
+<td align="left">49</td>
+<td align="left">NA</td>
+<td align="left">45</td>
+<td align="right">1391</td>
+</tr>
+<tr class="odd">
+<td align="left">177</td>
+<td align="left">59</td>
+<td align="left">SEAN M MC CORMICK</td>
+<td align="left">2.0</td>
+<td align="left">1284103</td>
+<td align="left">MI</td>
+<td align="left">853</td>
+<td align="left">41</td>
+<td align="left">NA</td>
+<td align="left">9</td>
+<td align="left">40</td>
+<td align="left">43</td>
+<td align="left">54</td>
+<td align="left">44</td>
+<td align="right">1319</td>
+</tr>
+<tr class="even">
+<td align="left">180</td>
+<td align="left">60</td>
+<td align="left">JULIA SHEN</td>
+<td align="left">1.5</td>
+<td align="left">1457926</td>
+<td align="left">MI</td>
+<td align="left">967</td>
+<td align="left">33</td>
+<td align="left">34</td>
+<td align="left">45</td>
+<td align="left">42</td>
+<td align="left">24</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">1330</td>
+</tr>
+<tr class="odd">
+<td align="left">183</td>
+<td align="left">61</td>
+<td align="left">JEZZEL FARKAS</td>
+<td align="left">1.5</td>
+<td align="left">1577159</td>
+<td align="left">ON</td>
+<td align="left">955</td>
+<td align="left">32</td>
+<td align="left">3</td>
+<td align="left">54</td>
+<td align="left">47</td>
+<td align="left">42</td>
+<td align="left">30</td>
+<td align="left">37</td>
+<td align="right">1327</td>
+</tr>
+<tr class="even">
+<td align="left">186</td>
+<td align="left">62</td>
+<td align="left">ASHWIN BALAJI</td>
+<td align="left">1.0</td>
+<td align="left">1521954</td>
+<td align="left">MI</td>
+<td align="left">1530</td>
+<td align="left">55</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">1186</td>
+</tr>
+<tr class="odd">
+<td align="left">189</td>
+<td align="left">63</td>
+<td align="left">THOMAS JOSEPH HOSMER</td>
+<td align="left">1.0</td>
+<td align="left">1505709</td>
+<td align="left">MI</td>
+<td align="left">1175</td>
+<td align="left">2</td>
+<td align="left">48</td>
+<td align="left">49</td>
+<td align="left">43</td>
+<td align="left">45</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">1350</td>
+</tr>
+<tr class="even">
+<td align="left">192</td>
+<td align="left">64</td>
+<td align="left">BEN LI</td>
+<td align="left">1.0</td>
+<td align="left">1500656</td>
+<td align="left">MI</td>
+<td align="left">1163</td>
+<td align="left">22</td>
+<td align="left">30</td>
+<td align="left">31</td>
+<td align="left">49</td>
+<td align="left">46</td>
+<td align="left">42</td>
+<td align="left">54</td>
+<td align="right">1263</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#create a output dataframe with selected data
+chess_output &lt;- subset(chess_new_data, select = c(&quot;Player Name&quot;, &quot;Total Points&quot;, &quot;Player State&quot;, &quot;Player Pre-Rating&quot;, &quot;Opponent Avg Rating&quot;))
+
+col_order &lt;- c(&quot;Player Name&quot;, &quot;Player State&quot;, &quot;Total Points&quot;, &quot;Player Pre-Rating&quot;, &quot;Opponent Avg Rating&quot;)
+chess_output &lt;- chess_output[, col_order]
+
+#export the dataframe to a CSV file
+write.csv(chess_output, &quot;final_chess.csv&quot;, row.names = FALSE)
+knitr::kable(chess_output)</code></pre>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="28%" />
+<col width="13%" />
+<col width="13%" />
+<col width="18%" />
+<col width="21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Player Name</th>
+<th align="left">Player State</th>
+<th align="left">Total Points</th>
+<th align="left">Player Pre-Rating</th>
+<th align="right">Opponent Avg Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">GARY HUA</td>
+<td align="left">ON</td>
+<td align="left">6.0</td>
+<td align="left">1794</td>
+<td align="right">1605</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">DAKSHESH DARURI</td>
+<td align="left">MI</td>
+<td align="left">6.0</td>
+<td align="left">1553</td>
+<td align="right">1469</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">ADITYA BAJAJ</td>
+<td align="left">MI</td>
+<td align="left">6.0</td>
+<td align="left">1384</td>
+<td align="right">1564</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">PATRICK H SCHILLING</td>
+<td align="left">MI</td>
+<td align="left">5.5</td>
+<td align="left">1716</td>
+<td align="right">1574</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="left">HANSHI ZUO</td>
+<td align="left">MI</td>
+<td align="left">5.5</td>
+<td align="left">1655</td>
+<td align="right">1501</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">HANSEN SONG</td>
+<td align="left">OH</td>
+<td align="left">5.0</td>
+<td align="left">1686</td>
+<td align="right">1519</td>
+</tr>
+<tr class="odd">
+<td align="left">21</td>
+<td align="left">GARY DEE SWATHELL</td>
+<td align="left">MI</td>
+<td align="left">5.0</td>
+<td align="left">1649</td>
+<td align="right">1372</td>
+</tr>
+<tr class="even">
+<td align="left">24</td>
+<td align="left">EZEKIEL HOUGHTON</td>
+<td align="left">MI</td>
+<td align="left">5.0</td>
+<td align="left">1641</td>
+<td align="right">1468</td>
+</tr>
+<tr class="odd">
+<td align="left">27</td>
+<td align="left">STEFANO LEE</td>
+<td align="left">ON</td>
+<td align="left">5.0</td>
+<td align="left">1411</td>
+<td align="right">1523</td>
+</tr>
+<tr class="even">
+<td align="left">30</td>
+<td align="left">ANVIT RAO</td>
+<td align="left">MI</td>
+<td align="left">5.0</td>
+<td align="left">1365</td>
+<td align="right">1554</td>
+</tr>
+<tr class="odd">
+<td align="left">33</td>
+<td align="left">CAMERON WILLIAM MC LEMAN</td>
+<td align="left">MI</td>
+<td align="left">4.5</td>
+<td align="left">1712</td>
+<td align="right">1468</td>
+</tr>
+<tr class="even">
+<td align="left">36</td>
+<td align="left">KENNETH J TACK</td>
+<td align="left">MI</td>
+<td align="left">4.5</td>
+<td align="left">1663</td>
+<td align="right">1506</td>
+</tr>
+<tr class="odd">
+<td align="left">39</td>
+<td align="left">TORRANCE HENRY JR</td>
+<td align="left">MI</td>
+<td align="left">4.5</td>
+<td align="left">1666</td>
+<td align="right">1498</td>
+</tr>
+<tr class="even">
+<td align="left">42</td>
+<td align="left">BRADLEY SHAW</td>
+<td align="left">MI</td>
+<td align="left">4.5</td>
+<td align="left">1610</td>
+<td align="right">1515</td>
+</tr>
+<tr class="odd">
+<td align="left">45</td>
+<td align="left">ZACHARY JAMES HOUGHTON</td>
+<td align="left">MI</td>
+<td align="left">4.5</td>
+<td align="left">1220</td>
+<td align="right">1484</td>
+</tr>
+<tr class="even">
+<td align="left">48</td>
+<td align="left">MIKE NIKITIN</td>
+<td align="left">MI</td>
+<td align="left">4.0</td>
+<td align="left">1604</td>
+<td align="right">1386</td>
+</tr>
+<tr class="odd">
+<td align="left">51</td>
+<td align="left">RONALD GRZEGORCZYK</td>
+<td align="left">MI</td>
+<td align="left">4.0</td>
+<td align="left">1629</td>
+<td align="right">1499</td>
+</tr>
+<tr class="even">
+<td align="left">54</td>
+<td align="left">DAVID SUNDEEN</td>
+<td align="left">MI</td>
+<td align="left">4.0</td>
+<td align="left">1600</td>
+<td align="right">1480</td>
+</tr>
+<tr class="odd">
+<td align="left">57</td>
+<td align="left">DIPANKAR ROY</td>
+<td align="left">MI</td>
+<td align="left">4.0</td>
+<td align="left">1564</td>
+<td align="right">1426</td>
+</tr>
+<tr class="even">
+<td align="left">60</td>
+<td align="left">JASON ZHENG</td>
+<td align="left">MI</td>
+<td align="left">4.0</td>
+<td align="left">1595</td>
+<td align="right">1411</td>
+</tr>
+<tr class="odd">
+<td align="left">63</td>
+<td align="left">DINH DANG BUI</td>
+<td align="left">ON</td>
+<td align="left">4.0</td>
+<td align="left">1563</td>
+<td align="right">1470</td>
+</tr>
+<tr class="even">
+<td align="left">66</td>
+<td align="left">EUGENE L MCCLURE</td>
+<td align="left">MI</td>
+<td align="left">4.0</td>
+<td align="left">1555</td>
+<td align="right">1300</td>
+</tr>
+<tr class="odd">
+<td align="left">69</td>
+<td align="left">ALAN BUI</td>
+<td align="left">ON</td>
+<td align="left">4.0</td>
+<td align="left">1363</td>
+<td align="right">1214</td>
+</tr>
+<tr class="even">
+<td align="left">72</td>
+<td align="left">MICHAEL R ALDRICH</td>
+<td align="left">MI</td>
+<td align="left">4.0</td>
+<td align="left">1229</td>
+<td align="right">1357</td>
+</tr>
+<tr class="odd">
+<td align="left">75</td>
+<td align="left">LOREN SCHWIEBERT</td>
+<td align="left">MI</td>
+<td align="left">3.5</td>
+<td align="left">1745</td>
+<td align="right">1363</td>
+</tr>
+<tr class="even">
+<td align="left">78</td>
+<td align="left">MAX ZHU</td>
+<td align="left">ON</td>
+<td align="left">3.5</td>
+<td align="left">1579</td>
+<td align="right">1507</td>
+</tr>
+<tr class="odd">
+<td align="left">81</td>
+<td align="left">GAURAV GIDWANI</td>
+<td align="left">MI</td>
+<td align="left">3.5</td>
+<td align="left">1552</td>
+<td align="right">1222</td>
+</tr>
+<tr class="even">
+<td align="left">84</td>
+<td align="left">SOFIA ADINA STANESCU-BELLU</td>
+<td align="left">MI</td>
+<td align="left">3.5</td>
+<td align="left">1507</td>
+<td align="right">1522</td>
+</tr>
+<tr class="odd">
+<td align="left">87</td>
+<td align="left">CHIEDOZIE OKORIE</td>
+<td align="left">MI</td>
+<td align="left">3.5</td>
+<td align="left">1602</td>
+<td align="right">1314</td>
+</tr>
+<tr class="even">
+<td align="left">90</td>
+<td align="left">GEORGE AVERY JONES</td>
+<td align="left">ON</td>
+<td align="left">3.5</td>
+<td align="left">1522</td>
+<td align="right">1144</td>
+</tr>
+<tr class="odd">
+<td align="left">93</td>
+<td align="left">RISHI SHETTY</td>
+<td align="left">MI</td>
+<td align="left">3.5</td>
+<td align="left">1494</td>
+<td align="right">1260</td>
+</tr>
+<tr class="even">
+<td align="left">96</td>
+<td align="left">JOSHUA PHILIP MATHEWS</td>
+<td align="left">ON</td>
+<td align="left">3.5</td>
+<td align="left">1441</td>
+<td align="right">1379</td>
+</tr>
+<tr class="odd">
+<td align="left">99</td>
+<td align="left">JADE GE</td>
+<td align="left">MI</td>
+<td align="left">3.5</td>
+<td align="left">1449</td>
+<td align="right">1277</td>
+</tr>
+<tr class="even">
+<td align="left">102</td>
+<td align="left">MICHAEL JEFFERY THOMAS</td>
+<td align="left">MI</td>
+<td align="left">3.5</td>
+<td align="left">1399</td>
+<td align="right">1375</td>
+</tr>
+<tr class="odd">
+<td align="left">105</td>
+<td align="left">JOSHUA DAVID LEE</td>
+<td align="left">MI</td>
+<td align="left">3.5</td>
+<td align="left">1438</td>
+<td align="right">1150</td>
+</tr>
+<tr class="even">
+<td align="left">108</td>
+<td align="left">SIDDHARTH JHA</td>
+<td align="left">MI</td>
+<td align="left">3.5</td>
+<td align="left">1355</td>
+<td align="right">1388</td>
+</tr>
+<tr class="odd">
+<td align="left">111</td>
+<td align="left">AMIYATOSH PWNANANDAM</td>
+<td align="left">MI</td>
+<td align="left">3.5</td>
+<td align="left">980</td>
+<td align="right">1385</td>
+</tr>
+<tr class="even">
+<td align="left">114</td>
+<td align="left">BRIAN LIU</td>
+<td align="left">MI</td>
+<td align="left">3.0</td>
+<td align="left">1423</td>
+<td align="right">1539</td>
+</tr>
+<tr class="odd">
+<td align="left">117</td>
+<td align="left">JOEL R HENDON</td>
+<td align="left">MI</td>
+<td align="left">3.0</td>
+<td align="left">1436</td>
+<td align="right">1430</td>
+</tr>
+<tr class="even">
+<td align="left">120</td>
+<td align="left">FOREST ZHANG</td>
+<td align="left">MI</td>
+<td align="left">3.0</td>
+<td align="left">1348</td>
+<td align="right">1391</td>
+</tr>
+<tr class="odd">
+<td align="left">123</td>
+<td align="left">KYLE WILLIAM MURPHY</td>
+<td align="left">MI</td>
+<td align="left">3.0</td>
+<td align="left">1403</td>
+<td align="right">1248</td>
+</tr>
+<tr class="even">
+<td align="left">126</td>
+<td align="left">JARED GE</td>
+<td align="left">MI</td>
+<td align="left">3.0</td>
+<td align="left">1332</td>
+<td align="right">1150</td>
+</tr>
+<tr class="odd">
+<td align="left">129</td>
+<td align="left">ROBERT GLEN VASEY</td>
+<td align="left">MI</td>
+<td align="left">3.0</td>
+<td align="left">1283</td>
+<td align="right">1107</td>
+</tr>
+<tr class="even">
+<td align="left">132</td>
+<td align="left">JUSTIN D SCHILLING</td>
+<td align="left">MI</td>
+<td align="left">3.0</td>
+<td align="left">1199</td>
+<td align="right">1327</td>
+</tr>
+<tr class="odd">
+<td align="left">135</td>
+<td align="left">DEREK YAN</td>
+<td align="left">MI</td>
+<td align="left">3.0</td>
+<td align="left">1242</td>
+<td align="right">1152</td>
+</tr>
+<tr class="even">
+<td align="left">138</td>
+<td align="left">JACOB ALEXANDER LAVALLEY</td>
+<td align="left">MI</td>
+<td align="left">3.0</td>
+<td align="left">377</td>
+<td align="right">1358</td>
+</tr>
+<tr class="odd">
+<td align="left">141</td>
+<td align="left">ERIC WRIGHT</td>
+<td align="left">MI</td>
+<td align="left">2.5</td>
+<td align="left">1362</td>
+<td align="right">1392</td>
+</tr>
+<tr class="even">
+<td align="left">144</td>
+<td align="left">DANIEL KHAIN</td>
+<td align="left">MI</td>
+<td align="left">2.5</td>
+<td align="left">1382</td>
+<td align="right">1356</td>
+</tr>
+<tr class="odd">
+<td align="left">147</td>
+<td align="left">MICHAEL J MARTIN</td>
+<td align="left">MI</td>
+<td align="left">2.5</td>
+<td align="left">1291</td>
+<td align="right">1286</td>
+</tr>
+<tr class="even">
+<td align="left">150</td>
+<td align="left">SHIVAM JHA</td>
+<td align="left">MI</td>
+<td align="left">2.5</td>
+<td align="left">1056</td>
+<td align="right">1296</td>
+</tr>
+<tr class="odd">
+<td align="left">153</td>
+<td align="left">TEJAS AYYAGARI</td>
+<td align="left">MI</td>
+<td align="left">2.5</td>
+<td align="left">1011</td>
+<td align="right">1356</td>
+</tr>
+<tr class="even">
+<td align="left">156</td>
+<td align="left">ETHAN GUO</td>
+<td align="left">MI</td>
+<td align="left">2.5</td>
+<td align="left">935</td>
+<td align="right">1495</td>
+</tr>
+<tr class="odd">
+<td align="left">159</td>
+<td align="left">JOSE C YBARRA</td>
+<td align="left">MI</td>
+<td align="left">2.0</td>
+<td align="left">1393</td>
+<td align="right">1345</td>
+</tr>
+<tr class="even">
+<td align="left">162</td>
+<td align="left">LARRY HODGE</td>
+<td align="left">MI</td>
+<td align="left">2.0</td>
+<td align="left">1270</td>
+<td align="right">1206</td>
+</tr>
+<tr class="odd">
+<td align="left">165</td>
+<td align="left">ALEX KONG</td>
+<td align="left">MI</td>
+<td align="left">2.0</td>
+<td align="left">1186</td>
+<td align="right">1406</td>
+</tr>
+<tr class="even">
+<td align="left">168</td>
+<td align="left">MARISA RICCI</td>
+<td align="left">MI</td>
+<td align="left">2.0</td>
+<td align="left">1153</td>
+<td align="right">1414</td>
+</tr>
+<tr class="odd">
+<td align="left">171</td>
+<td align="left">MICHAEL LU</td>
+<td align="left">MI</td>
+<td align="left">2.0</td>
+<td align="left">1092</td>
+<td align="right">1363</td>
+</tr>
+<tr class="even">
+<td align="left">174</td>
+<td align="left">VIRAJ MOHILE</td>
+<td align="left">MI</td>
+<td align="left">2.0</td>
+<td align="left">917</td>
+<td align="right">1391</td>
+</tr>
+<tr class="odd">
+<td align="left">177</td>
+<td align="left">SEAN M MC CORMICK</td>
+<td align="left">MI</td>
+<td align="left">2.0</td>
+<td align="left">853</td>
+<td align="right">1319</td>
+</tr>
+<tr class="even">
+<td align="left">180</td>
+<td align="left">JULIA SHEN</td>
+<td align="left">MI</td>
+<td align="left">1.5</td>
+<td align="left">967</td>
+<td align="right">1330</td>
+</tr>
+<tr class="odd">
+<td align="left">183</td>
+<td align="left">JEZZEL FARKAS</td>
+<td align="left">ON</td>
+<td align="left">1.5</td>
+<td align="left">955</td>
+<td align="right">1327</td>
+</tr>
+<tr class="even">
+<td align="left">186</td>
+<td align="left">ASHWIN BALAJI</td>
+<td align="left">MI</td>
+<td align="left">1.0</td>
+<td align="left">1530</td>
+<td align="right">1186</td>
+</tr>
+<tr class="odd">
+<td align="left">189</td>
+<td align="left">THOMAS JOSEPH HOSMER</td>
+<td align="left">MI</td>
+<td align="left">1.0</td>
+<td align="left">1175</td>
+<td align="right">1350</td>
+</tr>
+<tr class="even">
+<td align="left">192</td>
+<td align="left">BEN LI</td>
+<td align="left">MI</td>
+<td align="left">1.0</td>
+<td align="left">1163</td>
+<td align="right">1263</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
